@@ -11,7 +11,7 @@
     <link href="<?php echo base_url('assets/blog/img/favicon.png')?>" rel=icon>
 
     <!-- web-fonts -->
-    <!-- <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,500' rel='stylesheet' type='text/css'> -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,500' rel='stylesheet' type='text/css'>
 
     <!-- Bootstrap -->
     <!-- <link href="../../assets/blog/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -66,7 +66,8 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="logo">
-                                        <a href="index.php"><img src="assets/img/logo.png" alt="Tech NewsLogo"></a>
+                                        <a href="index.php"><img src="<?php echo base_url('assets/blog/img/logo.png'); ?>" alt="Tech NewsLogo"></a>
+                                        <!-- <a href="index.php"><img src="assets/img/logo.png" alt="Tech NewsLogo"></a> -->
                                     </div>
                                     <!-- Logo Section -->
                                 </div>
@@ -195,7 +196,7 @@
                         <div class="col-md-7">
                             <div class="feature_article_wrapper">
                                 <div class="feature_article_img">
-                                    <img class="img-responsive top_static_article_img" src="assets/img/feature-top.jpg"
+                                    <img class="img-responsive top_static_article_img" src="<?php echo base_url('assets/blog/img/feature-top.jpg'); ?>"
                                     alt="feature-top">
                                 </div>
                                 <!-- feature_article_img -->
@@ -208,11 +209,11 @@
                                     <!-- feature_article_title -->
 
                                     <div class="feature_article_date"><a href="#" target="_self">Stive Clark</a>,<a href="#"
-                                     target="_self">Aug
-                                 4, 2015</a></div>
-                                 <!-- feature_article_date -->
+                                       target="_self">Aug
+                                   4, 2015</a></div>
+                                   <!-- feature_article_date -->
 
-                                 <div class="feature_article_content">
+                                   <div class="feature_article_content">
                                     In a move to address mounting concerns about security on Android, Google and Samsung are
                                     now issuing.
                                 </div>
@@ -236,7 +237,7 @@
                     <div class="col-md-5">
                         <div class="feature_static_wrapper">
                             <div class="feature_article_img">
-                                <img class="img-responsive" src="assets/img/feature-static1.jpg" alt="feature-top">
+                                <img class="img-responsive" src="<?php echo base_url('assets/blog/img/feature-static1.jpg'); ?>" alt="feature-top">
                             </div>
                             <!-- feature_article_img -->
 
@@ -248,11 +249,11 @@
                                 <!-- feature_article_title -->
 
                                 <div class="feature_article_date"><a href="#" target="_self">Stive Clark</a>,<a href="#"
-                                 target="_self">Aug
-                             4, 2015</a></div>
-                             <!-- feature_article_date -->
+                                   target="_self">Aug
+                               4, 2015</a></div>
+                               <!-- feature_article_date -->
 
-                             <div class="feature_article_content">
+                               <div class="feature_article_content">
                                 In a move to address mounting concerns about security on Android...
                             </div>
                             <!-- feature_article_content -->
@@ -275,7 +276,7 @@
                 <div class="col-md-5">
                     <div class="feature_static_last_wrapper">
                         <div class="feature_article_img">
-                            <img class="img-responsive" src="assets/img/feature-static2.jpg" alt="feature-top">
+                            <img class="img-responsive" src="<?php echo base_url('assets/blog/img/feature-static2.jpg'); ?>" alt="feature-top">
                         </div>
                         <!-- feature_article_img -->
 
@@ -288,11 +289,11 @@
                             <!-- feature_article_title -->
 
                             <div class="feature_article_date"><a href="#" target="_self">Stive Clark</a>,<a href="#"
-                             target="_self">Aug
-                         4, 2015</a></div>
-                         <!-- feature_article_date -->
+                               target="_self">Aug
+                           4, 2015</a></div>
+                           <!-- feature_article_date -->
 
-                         <div class="feature_article_content">
+                           <div class="feature_article_content">
                             In a move to address mounting concerns about security on Android...
                         </div>
                         <!-- feature_article_content -->
@@ -335,12 +336,12 @@
                             <div class="col-md-6">
                                 <div class="top_article_img">
                                     <a href="single.php" target="_self"><img class="img-responsive"
-                                       src="assets/img/cat-mobi-left-1.jpg" alt="feature-top">
-                                   </a>
-                               </div>
-                               <!----top_article_img------>
-                           </div>
-                           <div class="col-md-6">
+                                     src="<?php echo base_url('assets/blog/img/cat-mobi-left-1.jpg'); ?>" alt="feature-top">
+                                 </a>
+                             </div>
+                             <!----top_article_img------>
+                         </div>
+                         <div class="col-md-6">
                             <span class="tag purple">Mobile</span>
 
                             <div class="category_article_title">
@@ -369,10 +370,10 @@
                         <div class="col-md-6">
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#"><img class="media-object" src="assets/img/cat-mobi-sm1.jpg"
-                                     alt="Generic placeholder image"></a>
-                                 </div>
-                                 <div class="media-body">
+                                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/cat-mobi-sm1.jpg'); ?>"
+                                       alt="Generic placeholder image"></a>
+                                   </div>
+                                   <div class="media-body">
                                     <span class="tag purple">Mobile</span>
 
                                     <h3 class="media-heading"><a href="single.php" target="_self">Apple launches photo-centric
@@ -387,10 +388,10 @@
                             </div>
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#"><img class="media-object" src="assets/img/cat-mobi-sm3.jpg"
-                                     alt="Generic placeholder image"></a>
-                                 </div>
-                                 <div class="media-body">
+                                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/cat-mobi-sm3.jpg'); ?>"
+                                       alt="Generic placeholder image"></a>
+                                   </div>
+                                   <div class="media-body">
                                     <span class="tag purple">Mobile</span>
 
                                     <h3 class="media-heading"><a href="single.php" target="_self">The Portable Charger or data
@@ -407,10 +408,10 @@
                         <div class="col-md-6">
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#"><img class="media-object" src="assets/img/cat-mobi-sm2.jpg"
-                                     alt="Generic placeholder image"></a>
-                                 </div>
-                                 <div class="media-body">
+                                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/cat-mobi-sm2.jpg'); ?>"
+                                       alt="Generic placeholder image"></a>
+                                   </div>
+                                   <div class="media-body">
                                     <span class="tag purple">Mobile</span>
 
                                     <h3 class="media-heading"><a href="single.php" target="_self">Iphone 6 launches white & Grey
@@ -425,10 +426,10 @@
                             </div>
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#"><img class="media-object" src="assets/img/cat-mobi-sm4.jpg"
-                                     alt="Generic placeholder image"></a>
-                                 </div>
-                                 <div class="media-body">
+                                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/cat-mobi-sm4.jpg'); ?>"
+                                       alt="Generic placeholder image"></a>
+                                   </div>
+                                   <div class="media-body">
                                     <span class="tag purple">Mobile</span>
 
                                     <h3 class="media-heading"><a href="single.php" target="_self">Fully new look slim handset
@@ -459,15 +460,15 @@
                         <div class="col-md-6">
                             <div class="category_article_body">
                                 <div class="top_article_img">
-                                    <a href="single.php" target="_self"><img class="img-responsive" src="assets/img/tab_top1.jpg"
-                                       alt="feature-top">
-                                   </a>
-                               </div>
-                               <!-- top_article_img -->
+                                    <a href="single.php" target="_self"><img class="img-responsive" src="<?php echo base_url('assets/blog/img/tab_top1.jpg'); ?>"
+                                     alt="feature-top">
+                                 </a>
+                             </div>
+                             <!-- top_article_img -->
 
-                               <span class="tag pink"><a href="category.php" target="_self">Tablet</a></span>
+                             <span class="tag pink"><a href="category.php" target="_self">Tablet</a></span>
 
-                               <div class="category_article_title">
+                             <div class="category_article_title">
                                 <h2><a href="single.php" target="_self">Sony launce a new Android tablets for new
                                 generation </a></h2>
                             </div>
@@ -499,7 +500,7 @@
                         <div class="category_article_body">
                             <div class="top_article_img">
                                 <a href="single.php" target="_self">
-                                    <img class="img-responsive" src="assets/img/tab_top2.jpg" alt="feature-top">
+                                    <img class="img-responsive" src="<?php echo base_url('assets/blog/img/tab_top2.jpg'); ?>" alt="feature-top">
                                 </a>
                             </div>
                             <!-- top_article_img -->
@@ -554,7 +555,7 @@
                         <div class="category_article_body">
                             <div class="top_article_img">
                                 <a href="single.php" target="_self">
-                                    <img class="img-responsive" src="assets/img/gad_top1.jpg" alt="feature-top">
+                                    <img class="img-responsive" src="<?php echo base_url('assets/blog/img/gad_top1.jpg'); ?>" alt="feature-top">
                                 </a>
                             </div>
                             <!-- top_article_img -->
@@ -587,10 +588,10 @@
                         <div class="category_article_list">
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#"><img class="media-object" src="assets/img/cat-mobi-sm1.jpg"
-                                     alt="Generic placeholder image"></a>
-                                 </div>
-                                 <div class="media-body">
+                                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/cat-mobi-sm1.jpg'); ?>"
+                                       alt="Generic placeholder image"></a>
+                                   </div>
+                                   <div class="media-body">
                                     <h3 class="media-heading"><a href="single.php" target="_self">Apple launches photo-centric
                                     wrist watch for Android</a></h3>
                                     <span class="media-date"><a href="#">10Aug- 2015</a>,  by: <a href="#">Eric joan</a></span>
@@ -603,10 +604,10 @@
                             </div>
                             <div class="media">
                                 <div class="media-left">
-                                    <a href="#"><img class="media-object" src="assets/img/cat-mobi-sm3.jpg"
-                                     alt="Generic placeholder image"></a>
-                                 </div>
-                                 <div class="media-body">
+                                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/cat-mobi-sm3.jpg'); ?>"
+                                       alt="Generic placeholder image"></a>
+                                   </div>
+                                   <div class="media-body">
                                     <h3 class="media-heading"><a href="single.php" target="_self">Apple launches photo-centric
                                     wrist watch for Android</a></h3>
                                     <span class="media-date"><a href="#">10Aug- 2015</a>,  by: <a href="#">Eric joan</a></span>
@@ -626,7 +627,7 @@
                     <div class="col-md-6">
                         <div class="category_article_body">
                             <div class="top_article_img">
-                                <img class="img-responsive" src="assets/img/gad_top2.jpg" alt="feature-top">
+                                <img class="img-responsive" src="<?php echo base_url('assets/blog/img/gad_top2.jpg'); ?>" alt="feature-top">
                             </div>
                             <!-- top_article_img -->
 
@@ -678,7 +679,7 @@
                     <div class="col-md-5">
                         <div class="top_article_img">
                             <a href="single.php" target="_self">
-                                <img class="img-responsive" src="assets/img/cam_left1.jpg" alt="feature-top">
+                                <img class="img-responsive" src="<?php echo base_url('assets/blog/img/cam_left1.jpg'); ?>" alt="feature-top">
                             </a>
                         </div>
                         <!-- top_article_img -->
@@ -722,7 +723,7 @@
                     <div class="col-md-5">
                         <div class="top_article_img">
                             <a href="single.php" target="_self">
-                                <img class="img-responsive" src="assets/img/cam_left2.jpg" alt="feature-top">
+                                <img class="img-responsive" src="<?php echo base_url('assets/blog/img/cam_left2.jpg'); ?>" alt="feature-top">
                             </a>
                         </div>
                         <!-- top_article_img -->
@@ -762,7 +763,7 @@
                     <div class="col-md-5">
                         <div class="top_article_img">
                             <a href="single.php" target="_self">
-                                <img class="img-responsive" src="assets/img/cam_left3.jpg" alt="feature-top">
+                                <img class="img-responsive" src="<?php echo base_url('assets/blog/img/cam_left3.jpg'); ?>" alt="feature-top">
                             </a>
                         </div>
                         <!-- media_social -->
@@ -825,7 +826,7 @@
                         <div class="category_article_body">
                             <div class="top_article_img">
                                 <a href="single.php" target="_self">
-                                    <img class="img-responsive" src="assets/img/design_top1.jpg" alt="feature-top">
+                                    <img class="img-responsive" src="<?php echo base_url('assets/blog/img/design_top1.jpg'); ?>" alt="feature-top">
                                 </a>
                             </div>
                             <!-- top_article_img -->
@@ -862,7 +863,7 @@
                         <div class="category_article_body">
                             <div class="top_article_img">
                                 <a href="single.php" target="_self">
-                                    <img class="img-responsive" src="assets/img/design_top2.jpg" alt="feature-top">
+                                    <img class="img-responsive" src="<?php echo base_url('assets/blog/img/design_top2.jpg'); ?>" alt="feature-top">
                                 </a>
                             </div>
                             <!-- top_article_img -->
@@ -907,7 +908,7 @@
                         <div class="category_article_body">
                             <div class="top_article_img">
                                 <a href="single.php" target="_self">
-                                    <img class="img-responsive" src="assets/img/design_top3.jpg" alt="feature-top">
+                                    <img class="img-responsive" src="<?php echo base_url('assets/blog/img/design_top3.jpg'); ?>" alt="feature-top">
                                 </a>
                             </div>
                             <!-- top_article_img -->
@@ -943,7 +944,7 @@
                     <div class="col-md-6">
                         <div class="category_article_body">
                             <div class="top_article_img">
-                                <img class="img-responsive" src="assets/img/design_top4.jpg" alt="feature-top">
+                                <img class="img-responsive" src="<?php echo base_url('assets/blog/img/design_top4.jpg'); ?>" alt="feature-top">
                             </div>
                             <!-- top_article_img -->
 
@@ -993,7 +994,7 @@
             </div>
             <div class="media">
                 <div class="media-left">
-                    <a href="#"><img class="media-object" src="assets/img/pop_right1.jpg" alt="Generic placeholder image"></a>
+                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/pop_right1.jpg'); ?>" alt="Generic placeholder image"></a>
                 </div>
                 <div class="media-body">
                     <h3 class="media-heading">
@@ -1012,7 +1013,7 @@
             </div>
             <div class="media">
                 <div class="media-left">
-                    <a href="#"><img class="media-object" src="assets/img/pop_right2.jpg" alt="Generic placeholder image"></a>
+                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/pop_right2.jpg'); ?>" alt="Generic placeholder image"></a>
                 </div>
                 <div class="media-body">
                     <h3 class="media-heading">
@@ -1032,7 +1033,7 @@
             </div>
             <div class="media">
                 <div class="media-left">
-                    <a href="#"><img class="media-object" src="assets/img/pop_right3.jpg" alt="Generic placeholder image"></a>
+                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/pop_right3.jpg'); ?>" alt="Generic placeholder image"></a>
                 </div>
                 <div class="media-body">
                     <h3 class="media-heading">
@@ -1052,7 +1053,7 @@
             </div>
             <div class="media">
                 <div class="media-left">
-                    <a href="#"><img class="media-object" src="assets/img/pop_right4.jpg" alt="Generic placeholder image"></a>
+                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/pop_right4.jpg'); ?>" alt="Generic placeholder image"></a>
                 </div>
                 <div class="media-body">
                     <h3 class="media-heading">
@@ -1075,15 +1076,15 @@
         <!-- Popular News -->
 
         <div class="widget hidden-xs m30">
-            <img class="img-responsive adv_img" src="assets/img/right_add1.jpg" alt="add_one">
-            <img class="img-responsive adv_img" src="assets/img/right_add2.jpg" alt="add_one">
-            <img class="img-responsive adv_img" src="assets/img/right_add3.jpg" alt="add_one">
-            <img class="img-responsive adv_img" src="assets/img/right_add4.jpg" alt="add_one">
+            <img class="img-responsive adv_img" src="<?php echo base_url('assets/blog/img/right_add1.jpg'); ?>" alt="add_one">
+            <img class="img-responsive adv_img" src="<?php echo base_url('assets/blog/img/right_add2.jpg'); ?>" alt="add_one">
+            <img class="img-responsive adv_img" src="<?php echo base_url('assets/blog/img/right_add3.jpg'); ?>" alt="add_one">
+            <img class="img-responsive adv_img" src="<?php echo base_url('assets/blog/img/right_add4.jpg'); ?>" alt="add_one">
         </div>
         <!-- Advertisement -->
 
         <div class="widget hidden-xs m30">
-            <img class="img-responsive widget_img" src="assets/img/right_add5.jpg" alt="add_one">
+            <img class="img-responsive widget_img" src="<?php echo base_url('assets/blog/img/right_add5.jpg'); ?>" alt="add_one">
         </div>
         <!-- Advertisement -->
 
@@ -1093,7 +1094,7 @@
             </div>
             <div class="media">
                 <div class="media-left">
-                    <a href="#"><img class="media-object" src="assets/img/pop_right1.jpg" alt="Generic placeholder image"></a>
+                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/pop_right1.jpg'); ?>" alt="Generic placeholder image"></a>
                 </div>
                 <div class="media-body">
                     <h3 class="media-heading">
@@ -1111,7 +1112,7 @@
             </div>
             <div class="media">
                 <div class="media-left">
-                    <a href="#"><img class="media-object" src="assets/img/pop_right2.jpg" alt="Generic placeholder image"></a>
+                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/pop_right2.jpg'); ?>" alt="Generic placeholder image"></a>
                 </div>
                 <div class="media-body"><h3 class="media-heading"><a href="single.php" target="_self">Samsung is the best
                 mobile in the android market.</a></h3> <span class="rating">
@@ -1124,7 +1125,7 @@
             </div>
             <div class="media">
                 <div class="media-left">
-                    <a href="#"><img class="media-object" src="assets/img/pop_right3.jpg" alt="Generic placeholder image"></a>
+                    <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/pop_right3.jpg'); ?>" alt="Generic placeholder image"></a>
                 </div>
                 <div class="media-body">
                     <h3 class="media-heading">
@@ -1140,7 +1141,7 @@
                 </div>
                 <div class="media">
                     <div class="media-left">
-                        <a href="#"><img class="media-object" src="assets/img/pop_right4.jpg" alt="Generic placeholder image"></a>
+                        <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/pop_right4.jpg'); ?>" alt="Generic placeholder image"></a>
                     </div>
                     <div class="media-body">
                         <h3 class="media-heading">
@@ -1159,7 +1160,7 @@
                 <!-- Reviews News -->
 
                 <div class="widget hidden-xs m30">
-                    <img class="img-responsive widget_img" src="assets/img/right_add6.jpg" alt="add_one">
+                    <img class="img-responsive widget_img" src="<?php echo base_url('assets/blog/img/right_add6.jpg'); ?>" alt="add_one">
                 </div>
                 <!-- Advertisement -->
 
@@ -1169,7 +1170,7 @@
                     </div>
                     <div class="media">
                         <div class="media-left">
-                            <a href="#"><img class="media-object" src="assets/img/pop_right1.jpg" alt="Generic placeholder image"></a>
+                            <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/pop_right1.jpg'); ?>" alt="Generic placeholder image"></a>
                         </div>
                         <div class="media-body">
                             <h3 class="media-heading">
@@ -1183,7 +1184,7 @@
                     </div>
                     <div class="media">
                         <div class="media-left">
-                            <a href="#"><img class="media-object" src="assets/img/pop_right2.jpg" alt="Generic placeholder image"></a>
+                            <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/pop_right2.jpg'); ?>" alt="Generic placeholder image"></a>
                         </div>
                         <div class="media-body">
                             <h3 class="media-heading">
@@ -1197,7 +1198,7 @@
                     </div>
                     <div class="media">
                         <div class="media-left">
-                            <a href="#"><img class="media-object" src="assets/img/pop_right3.jpg" alt="Generic placeholder image"></a>
+                            <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/pop_right3.jpg'); ?>" alt="Generic placeholder image"></a>
                         </div>
                         <div class="media-body">
                             <h3 class="media-heading">
@@ -1211,7 +1212,7 @@
                     </div>
                     <div class="media">
                         <div class="media-left">
-                            <a href="#"><img class="media-object" src="assets/img/pop_right4.jpg" alt="Generic placeholder image"></a>
+                            <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/pop_right4.jpg'); ?>" alt="Generic placeholder image"></a>
                         </div>
                         <div class="media-body">
                             <h3 class="media-heading">
@@ -1232,7 +1233,7 @@
                     <div class="widget_title widget_black">
                         <h2><a href="#">Editor Corner</a></h2>
                     </div>
-                    <div class="widget_body"><img class="img-responsive left" src="assets/img/editor.jpg"
+                    <div class="widget_body"><img class="img-responsive left" src="<?php echo base_url('assets/blog/img/editor.jpg'); ?>"
                       alt="Generic placeholder image">
 
                       <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C
@@ -1247,10 +1248,10 @@
             <!-- Editor News -->
 
             <div class="widget hidden-xs m30">
-                <img class="img-responsive add_img" src="assets/img/right_add7.jpg" alt="add_one">
-                <img class="img-responsive add_img" src="assets/img/right_add7.jpg" alt="add_one">
-                <img class="img-responsive add_img" src="assets/img/right_add7.jpg" alt="add_one">
-                <img class="img-responsive add_img" src="assets/img/right_add7.jpg" alt="add_one">
+                <img class="img-responsive add_img" src="<?php echo base_url('assets/blog/img/right_add7.jpg'); ?>" alt="add_one">
+                <img class="img-responsive add_img" src="<?php echo base_url('assets/blog/img/right_add7.jpg'); ?>" alt="add_one">
+                <img class="img-responsive add_img" src="<?php echo base_url('assets/blog/img/right_add7.jpg'); ?>" alt="add_one">
+                <img class="img-responsive add_img" src="<?php echo base_url('assets/blog/img/right_add7.jpg'); ?>" alt="add_one">
             </div>
             <!--Advertisement -->
 
@@ -1258,7 +1259,7 @@
                 <div class="widget_title widget_black">
                     <h2><a href="#">Readers Corner</a></h2>
                 </div>
-                <div class="widget_body"><img class="img-responsive left" src="assets/img/reader.jpg"
+                <div class="widget_body"><img class="img-responsive left" src="<?php echo base_url('assets/blog/img/reader.jpg'); ?>"
                   alt="Generic placeholder image">
 
                   <p>Collaboratively administrate empowered markets via plug-and-play networks. Dynamically procrastinate B2C
@@ -1273,7 +1274,7 @@
         <!--  Readers Corner News -->
 
         <div class="widget hidden-xs m30">
-            <img class="img-responsive widget_img" src="assets/img/podcast.jpg" alt="add_one">
+            <img class="img-responsive widget_img" src="<?php echo base_url('assets/blog/img/podcast.jpg'); ?>" alt="add_one">
         </div>
         <!--Advertisement-->
     </div>
@@ -1371,7 +1372,7 @@
                 <div class="footer_widget_title"><h3><a href="category.php" target="_self">About Tech</a></h3></div>
                 <div class="logo footer-logo">
                     <a title="fontanero" href="index.php">
-                        <img src="assets/img/tech_about.jpg" alt="technews">
+                        <img src="<?php echo base_url('assets/blog/img/tech_about.jpg'); ?>" alt="technews">
                     </a>
 
                     <p>Competently conceptualize go forward testing procedures and B2B expertise. Phosfluorescently
@@ -1423,10 +1424,10 @@
                 </div>
                 <div class="media">
                     <div class="media-left">
-                        <a href="#"><img class="media-object" src="assets/img/editor_pic1.jpg"
-                         alt="Generic placeholder image"></a>
-                     </div>
-                     <div class="media-body">
+                        <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/editor_pic1.jpg'); ?>"
+                           alt="Generic placeholder image"></a>
+                       </div>
+                       <div class="media-body">
                         <h3 class="media-heading">
                             <a href="single.php">Apple launches photo-centric wrist watch for Android</a>
                         </h3> 
@@ -1441,10 +1442,10 @@
                 </div>
                 <div class="media">
                     <div class="media-left">
-                        <a href="#"><img class="media-object" src="assets/img/editor_pic2.jpg"
-                         alt="Generic placeholder image"></a>
-                     </div>
-                     <div class="media-body">
+                        <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/editor_pic2.jpg'); ?>"
+                           alt="Generic placeholder image"></a>
+                       </div>
+                       <div class="media-body">
                         <h3 class="media-heading">
                             <a href="single.php">Apple launches photo-centric wrist watch for Android</a>
                         </h3> 
@@ -1459,10 +1460,10 @@
                 </div>
                 <div class="media">
                     <div class="media-left">
-                        <a href="#"><img class="media-object" src="assets/img/editor_pic3.jpg"
-                         alt="Generic placeholder image"></a>
-                     </div>
-                     <div class="media-body">
+                        <a href="#"><img class="media-object" src="<?php echo base_url('assets/blog/img/editor_pic3.jpg'); ?>"
+                           alt="Generic placeholder image"></a>
+                       </div>
+                       <div class="media-body">
                         <h3 class="media-heading">
                             <a href="single.php">Apple launches photo-centric wrist watch for Android</a>
                         </h3> 
@@ -1481,18 +1482,18 @@
                     <h3><a href="category.php" target="_self">Tech Photos</a></h3>
                 </div>
                 <div class="widget_photos">
-                    <img class="img-thumbnail" src="assets/img/tech_photo1.jpg" alt="Tech Photos">
-                    <img class="img-thumbnail" src="assets/img/tech_photo2.jpg" alt="Tech Photos">
-                    <img class="img-thumbnail" src="assets/img/tech_photo3.jpg" alt="Tech Photos">
-                    <img class="img-thumbnail" src="assets/img/tech_photo4.jpg" alt="Tech Photos">
-                    <img class="img-thumbnail" src="assets/img/tech_photo5.jpg" alt="Tech Photos">
-                    <img class="img-thumbnail" src="assets/img/tech_photo6.jpg" alt="Tech Photos">
-                    <img class="img-thumbnail" src="assets/img/tech_photo7.jpg" alt="Tech Photos">
-                    <img class="img-thumbnail" src="assets/img/tech_photo8.jpg" alt="Tech Photos">
-                    <img class="img-thumbnail" src="assets/img/tech_photo9.jpg" alt="Tech Photos">
-                    <img class="img-thumbnail" src="assets/img/tech_photo10.jpg" alt="Tech Photos">
-                    <img class="img-thumbnail" src="assets/img/tech_photo11.jpg" alt="Tech Photos">
-                    <img class="img-thumbnail" src="assets/img/tech_photo12.jpg" alt="Tech Photos">
+                    <img class="img-thumbnail" src="<?php echo base_url('assets/blog/img/tech_photo1.jpg'); ?>" alt="Tech Photos">
+                    <img class="img-thumbnail" src="<?php echo base_url('assets/blog/img/tech_photo2.jpg'); ?>" alt="Tech Photos">
+                    <img class="img-thumbnail" src="<?php echo base_url('assets/blog/img/tech_photo3.jpg'); ?>" alt="Tech Photos">
+                    <img class="img-thumbnail" src="<?php echo base_url('assets/blog/img/tech_photo4.jpg'); ?>" alt="Tech Photos">
+                    <img class="img-thumbnail" src="<?php echo base_url('assets/blog/img/tech_photo5.jpg'); ?>" alt="Tech Photos">
+                    <img class="img-thumbnail" src="<?php echo base_url('assets/blog/img/tech_photo6.jpg'); ?>" alt="Tech Photos">
+                    <img class="img-thumbnail" src="<?php echo base_url('assets/blog/img/tech_photo7.jpg'); ?>" alt="Tech Photos">
+                    <img class="img-thumbnail" src="<?php echo base_url('assets/blog/img/tech_photo8.jpg'); ?>" alt="Tech Photos">
+                    <img class="img-thumbnail" src="<?php echo base_url('assets/blog/img/tech_photo9.jpg'); ?>" alt="Tech Photos">
+                    <img class="img-thumbnail" src="<?php echo base_url('assets/blog/img/tech_photo10.jpg'); ?>" alt="Tech Photos">
+                    <img class="img-thumbnail" src="<?php echo base_url('assets/blog/img/tech_photo11.jpg'); ?>" alt="Tech Photos">
+                    <img class="img-thumbnail" src="<?php echo base_url('assets/blog/img/tech_photo12.jpg'); ?>" alt="Tech Photos">
                 </div>
 
             </div>

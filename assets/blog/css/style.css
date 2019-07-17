@@ -708,6 +708,7 @@ section {
     padding: 15px 30px;
     left: 10%;
     width: 80%;
+    opacity: 0.8;
 }
 
 .feature_article_content {
