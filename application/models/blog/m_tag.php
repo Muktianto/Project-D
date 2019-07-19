@@ -1,9 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class M_config extends CI_Model {
+class M_tag extends CI_Model {
 
-	private $table='sso_config';
+	public $table='blg_tag';
 	public $tag_id;
 	public $tag_name;
 
@@ -11,20 +11,20 @@ class M_config extends CI_Model {
 		return array(
 			array(
 				'field'=>'tag_name',
+				'input'=>'hidden',
 				'label'=>'Tag ID',
-				'input'=>'text'
 			),
 			array(
-				'input'=>'text',
 				'field'=>'tag_name',
-				'label'=>'Tag',
+				'input'=>'text',
+				'label'=>'Tag Name',
 				'rules'=>'required',
 			),
 		);
 	}
 
 	public function get_all(){
-		return $this->db->get($this->table)->result();
+		return $this->db->get($this->table)->result_array();
 	}
 
 	public function get_by_id($id){
