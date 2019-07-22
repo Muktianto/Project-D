@@ -1,17 +1,26 @@
 
+<div class="section-header">
+  <h1>DataTables</h1>&nbsp&nbsp&nbsp
+  <a href="#" class="btn btn-icon icon-left btn-success"><i class="fa fa-plus" style="font-size: smaller;"></i> Add</a>
+  <div class="section-header-breadcrumb">
+    <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+    <div class="breadcrumb-item"><a href="#">Modules</a></div>
+    <div class="breadcrumb-item">DataTables</div>
+  </div>
+</div>
 
 <div class="section-body">
-
   <div class="row">
     <div class="col-12">
       <div class="card">
-        <div class="card-header">
+        <!-- <div class="card-header">
           <h4>Advanced Table</h4>
-          <a href="#" class="btn btn-icon icon-left btn-info"><i class="fa fa-plus" style="font-size: smaller;"></i> Add</a>
-        </div>
+          <a href="#" class="btn btn-icon icon-left btn-success"><i class="fa fa-plus" style="font-size: smaller;"></i> Add</a>
+        </div> -->
         <div class="card-body">
           <div class="table-responsive">
             <table class="table table-striped" id="table-2">
+
               <thead>
                 <tr>
                   <th class="text-center">
@@ -28,6 +37,7 @@
                   <th>Action</th>
                 </tr>
               </thead>
+
               <tbody>
                 <tr>
                   <td>
@@ -49,6 +59,8 @@
                   <td><div class="badge badge-success">Completed</div></td>
                   <td><a href="#" class="btn btn-secondary">Detail</a></td>
                 </tr>
+
+                
                 <tr>
                   <td>
                     <div class="custom-checkbox custom-control">
@@ -116,6 +128,7 @@
                   <td><a href="#" class="btn btn-secondary">Detail</a></td>
                 </tr>
               </tbody>
+
             </table>
           </div>
         </div>

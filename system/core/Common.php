@@ -51,6 +51,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 // ------------------------------------------------------------------------
 
+// -------------------------------- IGNITED: DEFINE CUSTOM GLOBAL FUNCTION ------------------------------------
+
+function debug($data, $exit = true) {
+	if (empty($data) && $exit)
+		print_error('Data is empty');
+	echo '<div style="background-color: #2a2734; border-radius: .50rem; color: #ffcc99; border: none; padding: 0px 20px; font-weight: 600;display: inline-block; margin-bottom: 7px"><pre>';
+	if (is_object($data)) {
+		var_dump($data);
+	} else if (is_array($data)) {
+		print_r($data);
+	} else {
+		echo !empty($data) ? $data : '<span style="color: #fff">- Empty -</span>';
+	}
+	echo '</pre></div><br>';
+	if ($exit)
+		exit();
+}
+
+// -------------------------------- IGNITED: END OF DEFINE CUSTOM GLOBAL FUNCTION ------------------------------------
+
 if ( ! function_exists('is_php'))
 {
 	/**
@@ -192,8 +212,8 @@ if ( ! function_exists('load_class'))
 		is_loaded($class);
 
 		$_classes[$class] = isset($param)
-			? new $name($param)
-			: new $name();
+		? new $name($param)
+		: new $name();
 		return $_classes[$class];
 	}
 }
@@ -320,8 +340,8 @@ if ( ! function_exists('get_mimes'))
 		if (empty($_mimes))
 		{
 			$_mimes = file_exists(APPPATH.'config/mimes.php')
-				? include(APPPATH.'config/mimes.php')
-				: array();
+			? include(APPPATH.'config/mimes.php')
+			: array();
 
 			if (file_exists(APPPATH.'config/'.ENVIRONMENT.'/mimes.php'))
 			{
@@ -566,7 +586,7 @@ if ( ! function_exists('set_status_header'))
 		}
 
 		$server_protocol = (isset($_SERVER['SERVER_PROTOCOL']) && in_array($_SERVER['SERVER_PROTOCOL'], array('HTTP/1.0', 'HTTP/1.1', 'HTTP/2'), TRUE))
-			? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
+		? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.1';
 		header($server_protocol.' '.$code.' '.$text, TRUE, $code);
 	}
 }
@@ -837,8 +857,8 @@ if ( ! function_exists('function_usable'))
 			if ( ! isset($_suhosin_func_blacklist))
 			{
 				$_suhosin_func_blacklist = extension_loaded('suhosin')
-					? explode(',', trim(ini_get('suhosin.executor.func.blacklist')))
-					: array();
+				? explode(',', trim(ini_get('suhosin.executor.func.blacklist')))
+				: array();
 			}
 
 			return ! in_array($function_name, $_suhosin_func_blacklist, TRUE);

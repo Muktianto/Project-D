@@ -4,21 +4,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_tag extends CI_Model {
 
 	public $table='blg_tag';
-	public $tag_id;
-	public $tag_name;
+	public $attributes=array();
 
 	public function rules(){
 		return array(
-			array(
-				'field'=>'tag_name',
-				'input'=>'hidden',
+			'tag_id'=>array(
+				'input' => 'hidden',
+				'primary_key' => true,
 				'label'=>'Tag ID',
 			),
-			array(
-				'field'=>'tag_name',
+			'tag_name'=>array(
 				'input'=>'text',
 				'label'=>'Tag Name',
-				'rules'=>'required',
+				'validation'=>'required',
 			),
 		);
 	}
