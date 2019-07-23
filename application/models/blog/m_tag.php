@@ -4,6 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class M_tag extends CI_Model {
 
 	public $table='blg_tag';
+	public $primary_key;
 	public $attributes=array();
 
 	public function rules(){
@@ -12,21 +13,37 @@ class M_tag extends CI_Model {
 				'input' => 'hidden',
 				'primary_key' => true,
 				'label'=>'Tag ID',
+				'display'=>true,
 			),
 			'tag_name'=>array(
 				'input'=>'text',
 				'label'=>'Tag Name',
 				'validation'=>'required',
+				'sortable'=> true,
+				'display'=>true,
+			),
+			CREATE_BY=>array(
+				'value'=>$this->data->get_session('user_id'),
+			),
+			CREATE_DATE=>array(
+				'value'=>date('Y-m-d H:i:s'),
+			),
+			UPDATE_BY=>array(
+				'value'=>$this->data->get_session('user_id'),
+			),
+			UPDATE_DATE=>array(
+				'value'=>date('Y-m-d H:i:s'),
 			),
 		);
 	}
 
 	public function get_all(){
+		// debug($this->data->get_session());
 		return $this->db->get($this->table)->result_array();
 	}
 
 	public function get_by_id($id){
-		return $this->db->get_where($this->table,array("product_id" => $id))->row();
+		return $this->data->build($this->table, $id);
 	}
 
 	public function save(){

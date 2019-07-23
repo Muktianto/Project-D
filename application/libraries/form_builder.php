@@ -20,8 +20,20 @@ class Form_builder
 	public $list_view='';
 	public $form_view='';
 
+
+
 	public $html='';
-	public $breadcrum='';
+	public $bricks=array(
+		'breadcrum_bar'=>'',
+		'header_content'=>'',
+		'table_header'=>'',
+
+		'table_header_end'=>'',
+		'header_content_end'=>'',
+	);
+
+
+
 
 
 	public function init($model, $controller_id, $uri_string) {
@@ -32,7 +44,26 @@ class Form_builder
 		return true;
 	}
 
-	public function datatable($data_table, $model_rules, $datagrid_fields=array()){
+	public function mapping($model_rules, $data_table){
+		debug($data_table,false);
+		debug($model_rules);
+
+		$header=array();
+		foreach ($model_rules as $model_key => $model_value) {
+			if($model_value['display']){
+				$header[]=array(
+					'data'=>$model_key,
+					'label'=>$model_value['label'],
+					'sortable'=>$model_value['sortable'] ? $model_value['sortable'] : false,
+					'alias'=>
+				);
+			}
+
+
+		}
+	}
+
+	public function datatable(){
 		// breadcrum bar
 		$this->html.='<div class="section-header">
 		<h1>DataTables</h1>&nbsp&nbsp&nbsp
@@ -77,40 +108,41 @@ class Form_builder
 		}else{ // PENDING: required fields param to custom view
 
 		}
+	// end of table header
+		$this->html.='</tr></thead>';
 
 		// table body
-		$this->html.=' <tbody>';
+		// $this->html.=' <tbody>';
 
-		debug($data_table,false);
-		debug($model_rules);
-		// row body
-		foreach ($data_table as $data_table_value) {
-			if() sini
-			unset($data_table_value['create_by']);
-			unset($data_table_value['create_by']);
-			unset($data_table_value['create_by']);
-			unset($data_table_value['create_by']);
+		// // debug($data_table,false);
+		// // debug($model_rules);
+		// // row body
+		// foreach ($data_table as $data_table_value) {
+		// 	// if() sini
+		// 	unset($data_table_value['create_by']);
+		// 	unset($data_table_value['create_by']);
+		// 	unset($data_table_value['create_by']);
+		// 	unset($data_table_value['create_by']);
 
-			$this->html.='<tr>
-			<td>
-			<div class="custom-checkbox custom-control">
-			<input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
-			<label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-			</div>
-			</td>';
+		// 	$this->html.='<tr>
+		// 	<td>
+		// 	<div class="custom-checkbox custom-control">
+		// 	<input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
+		// 	<label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+		// 	</div>
+		// 	</td>';
 
-			fore
-			// $this->html.='<td>'.'</td>';
+		// 	// fore
+		// 	// $this->html.='<td>'.'</td>';
 
-			$this->html.='</tr>';
-		}
+		// 	$this->html.='</tr>';
+		// }
 
-		// end of table body
-		$this->html.=' <tbody>';
+		// // end of table body
+		// $this->html.=' <tbody>';
 
 
-		// end of table header
-		$this->html.='</tr></thead>';
+
 
 		// end of header content
 		$this->html.='</table></div></div></div></div></div></div>';

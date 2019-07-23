@@ -11,16 +11,18 @@ class Blg_Tag extends CI_Controller {
       $this->load->model('blog/m_tag','tag');
       $this->load->library('form_builder');
 
-      $this->form_builder->init('tag','blg_tag',$this->uri->uri_string);
+      $this->form_builder->init('tag','blg_tag', $this->uri->uri_string);
   }
 
   public function index() {
     $data_table=$this->tag->get_all();
+    $this->form_builder->mapping($this->tag->rules(), $data_table);
+
     $data=array(
         'start'=>microtime(true),
         'title'=>'Tag',
-        'data'=>$data_table,
-        'content'=>$this->form_builder->datatable($data_table, $this->tag->rules()),
+        // 'data'=>$data_table,
+        'content'=>$this->form_builder->datatable(),
         'sub_content'=>null,
     );
     $this->load->view("template/v_admin_layout", $data);
