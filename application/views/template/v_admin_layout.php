@@ -94,8 +94,12 @@
       <section class="section">
         <!-- LOAD CONTENT -->
         <?php 
-        echo $content;
-        // $this->load->view('template/v_content'); 
+        if(empty($content)){
+          $this->load->view('template/v_content');
+        }else{
+          echo  $content; 
+        }
+
         ?>
       </section>
     </div>

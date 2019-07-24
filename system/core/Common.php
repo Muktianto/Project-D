@@ -55,7 +55,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 function debug($data, $exit = true) {
 	if (empty($data) && $exit)
-		print_error('Data is empty');
+		echo 'Data is empty';
 	echo '<div style="background-color: #2a2734; border-radius: .50rem; color: #ffcc99; border: none; padding: 0px 20px; font-weight: 600;display: inline-block; margin-bottom: 7px"><pre>';
 	if (is_object($data)) {
 		var_dump($data);

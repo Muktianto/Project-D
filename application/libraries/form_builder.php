@@ -20,7 +20,9 @@ class Form_builder
 	public $list_view='';
 	public $form_view='';
 
-
+	public $header_map=array();
+	public $data_map=array();
+	public $bulk_input=true;
 
 	public $html='';
 	public $bricks=array(
@@ -45,22 +47,41 @@ class Form_builder
 	}
 
 	public function mapping($model_rules, $data_table){
-		debug($data_table,false);
-		debug($model_rules);
-
-		$header=array();
+		$this->data_map=$data_table;
+		// table header
+		$pk='';
 		foreach ($model_rules as $model_key => $model_value) {
-			if($model_value['display']){
-				$header[]=array(
-					'data'=>$model_key,
+			if(array_key_exists('display', $model_value) AND $model_value['display']){
+				$this->header_map[$model_key]=array(
+					// 'data'=>$model_key,
 					'label'=>$model_value['label'],
-					'sortable'=>$model_value['sortable'] ? $model_value['sortable'] : false,
-					'alias'=>
+					'sortable'=>array_key_exists('sortable', $model_value)? $model_value['sortable'] : false,
+					// 'alias'=>''
 				);
 			}
-
-
+			if(array_key_exists('primary_key', $model_value) AND $model_value['primary_key']){
+				$pk.=empty($pk)? $model_key : '|'.$model_key;
+			}
 		}
+		$this->header_map['action']=array(
+			'data'=>$pk,
+			'label'=>'Action',
+			'sortable'=>false,
+		);
+
+
+		// list data
+		foreach ($data_table as $data_key => $data_value) {
+			unset($data_table[$data_key][CREATE_BY]);
+			unset($data_table[$data_key][CREATE_DATE]);
+			unset($data_table[$data_key][UPDATE_BY]);
+			unset($data_table[$data_key][UPDATE_DATE]);
+
+			$data_table[$data_key]['action']='<a href="#" class="btn btn-secondary btn-sm btn-info">Detail</a>';
+		}
+		$this->data_map=$data_table;
+
+		return true;
 	}
 
 	public function datatable(){
@@ -89,57 +110,58 @@ class Form_builder
 		<table class="table table-striped" id="table-2">';
 
 		// table header
-		$this->html.='<thead>
-		<tr>
-		<th class="text-center">
-		<div class="custom-checkbox custom-control">
-		<input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
-		<label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-		</div>
-		</th>';
+		$this->html.='<thead><tr>';
+		if($this->bulk_input){
+			$this->html.='<th class="text-center">
+			<div class="custom-checkbox custom-control">
+			<input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
+			<label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+			</div>
+			</th>';
+		}
+
+		// debug($this->header_map);
 
 		// column header
-		if(empty($datagrid_fields)){
-			foreach ($model_rules as $rules_val) {
-				$column_name=!empty($rules_val['label'])? $rules_val['label'] : '-Empty-';
-				$this->html.="<th>$column_name</th>";
-			}
-
-		}else{ // PENDING: required fields param to custom view
-
+		foreach ($this->header_map as $header_val) {
+			$this->html.='<th>'.$header_val['label'].'</th>';
 		}
-	// end of table header
+
+		// end of table header
 		$this->html.='</tr></thead>';
 
 		// table body
-		// $this->html.=' <tbody>';
+		$this->html.=' <tbody>';
 
-		// // debug($data_table,false);
-		// // debug($model_rules);
-		// // row body
-		// foreach ($data_table as $data_table_value) {
-		// 	// if() sini
-		// 	unset($data_table_value['create_by']);
-		// 	unset($data_table_value['create_by']);
-		// 	unset($data_table_value['create_by']);
-		// 	unset($data_table_value['create_by']);
+		// row body
+		$i=1;
+		// debug($this->header_map,false );
+		// debug($this->data_map );
+		foreach ($this->data_map as $data_key => $data_value) {
 
-		// 	$this->html.='<tr>
-		// 	<td>
-		// 	<div class="custom-checkbox custom-control">
-		// 	<input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
-		// 	<label for="checkbox-1" class="custom-control-label">&nbsp;</label>
-		// 	</div>
-		// 	</td>';
+			$this->html.='<tr>';
+			if($this->bulk_input){
+				$this->html.='<td  class="text-center">
+				<div class="custom-checkbox custom-control">
+				<input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
+				<label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+				</div>
+				</td>';
+			}
+			foreach ($this->header_map as $header_key => $header_val) {
+				$this->html.='<td>'.$data_value[$header_key].'</td>';
+			}
+			// $this->html.='<td>'.$i.' Create a mobile app</td>';
+			// $this->html.='<td>Create a mobile app</td>';
+			// $this->html.='<td></td>';
 
-		// 	// fore
-		// 	// $this->html.='<td>'.'</td>';
+			$this->html.='</tr>';
+			$i++;
+		}
+		
 
-		// 	$this->html.='</tr>';
-		// }
-
-		// // end of table body
-		// $this->html.=' <tbody>';
+		// end of table body
+		$this->html.=' <tbody>';
 
 
 
