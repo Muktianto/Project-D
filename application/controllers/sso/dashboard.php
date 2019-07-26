@@ -8,6 +8,8 @@ class Dashboard extends CI_Controller{
 	{
 
 		$data['start']=microtime(true);
+		$data['debug']='template/v_add';
+		// $data['debug']='template/v_content';
 		// $x=$this->auto_global->get_session();
 		// $x=$this->get_sessionX();
 		// echo $x;exit();

@@ -95,7 +95,7 @@
         <!-- LOAD CONTENT -->
         <?php 
         if(empty($content)){
-          $this->load->view('template/v_content');
+          $this->load->view($debug);
         }else{
           echo  $content; 
         }

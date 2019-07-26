@@ -16,20 +16,20 @@ class Blg_Tag extends CI_Controller {
 
   public function index() {
     $data_table=$this->tag->get_all();
-    $this->form_builder->mapping($this->tag->rules(), $data_table);
+    $this->form_builder->mapping($this->tag->attributes, $data_table);
 
     $data=array(
         'start'=>microtime(true),
         'title'=>'Tag',
-        // 'data'=>$data_table,
-        'content'=>$this->form_builder->datatable(),
+        'content'=>$this->form_builder->build(),
         'sub_content'=>null,
     );
-    $this->load->view("template/v_admin_layout", $data);
+    $this->load->view($this->form_builder->admin_temp, $data);
 }
 
 public function add(){
     $this->form_validation->set_rules($this->m_tag->rules());
+
 
     if ($this->form_validation->run()) {
         $this->m_tag->save();

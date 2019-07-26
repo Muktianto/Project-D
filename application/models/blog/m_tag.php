@@ -7,8 +7,8 @@ class M_tag extends CI_Model {
 	public $primary_key;
 	public $attributes=array();
 
-	public function rules(){
-		return array(
+	public function __construct(){
+		$this->attributes= array(
 			'tag_id'=>array(
 				'input' => 'hidden',
 				'primary_key' => true,
@@ -19,7 +19,7 @@ class M_tag extends CI_Model {
 				'input'=>'text',
 				'label'=>'Tag Name',
 				'validation'=>'required',
-				'sortable'=> true,
+				// 'sortable'=> true,
 				'display'=>true,
 			),
 			CREATE_BY=>array(

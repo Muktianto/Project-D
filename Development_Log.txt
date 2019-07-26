@@ -6,6 +6,8 @@
 2019-07-24 Tue
 	|__INFO: penambahan config/constants.php 
 
+2019-07-25 Thu
+	|__PENDING: datatable filter aneh, col 1,3,4 pasti no filter, sementara skip colom
 
 
 
