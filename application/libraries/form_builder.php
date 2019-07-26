@@ -35,8 +35,7 @@ class Form_builder
 	public $bricks_form=array(
 		'breadcrum_bar'=>'',
 		'header_content'=>'',
-		'table_header'=>'',
-		'table_body'=>'',
+		'content'=>'',
 		'header_content_end'=>'',
 	);
 
