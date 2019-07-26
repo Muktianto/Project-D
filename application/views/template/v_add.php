@@ -34,43 +34,15 @@
               </div>
             </div>
           </div>
-        </form>
-      </div>
-    </div>
-
-    <div class="col-12 col-md-6">
-      <div class="card card-primary">
-        <div class="card-header">
-          <h4>Group Name 2</h4>
         </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label>Your Name</label>
-            <input type="text" class="form-control" required="">
-            <div class="invalid-feedback">
-              What's your name?
-            </div>
-          </div>
-          <div class="form-group mb-0">
-            <label>Message</label>
-            <textarea class="form-control" required=""></textarea>
-            <div class="invalid-feedback">
-              What do you wanna say?
-            </div>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div class="col-12 col-md-12">
-    <div class="card card-primary">
-      <div class="card-header">
-        <h4>Group Name</h4>
       </div>
-      <div class="card-body">
-        <div class="row">
-          <div class="col-12 col-md-6">
+
+      <div class="col-12 col-md-6">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h4>Group Name 2</h4>
+          </div>
+          <div class="card-body">
             <div class="form-group">
               <label>Your Name</label>
               <input type="text" class="form-control" required="">
@@ -78,45 +50,71 @@
                 What's your name?
               </div>
             </div>
-            <div class="form-group">
-              <label>Your Name</label>
-              <input type="text" class="form-control" required="">
-              <div class="invalid-feedback">
-                What's your name?
-              </div>
-            </div>
-          </div>
-
-          <div class="col-12 col-md-6">
-            <div class="form-group">
+            <div class="form-group mb-0">
               <label>Message</label>
               <textarea class="form-control" required=""></textarea>
               <div class="invalid-feedback">
                 What do you wanna say?
               </div>
             </div>
-            <div class="form-group">
-              <label>Your Name</label>
-              <input type="text" class="form-control" required="">
-              <div class="invalid-feedback">
-                What's your name?
-              </div>
-            </div>
           </div>
         </div>
-
       </div>
-      <div class="card-footer text-right">
-        <button class="btn btn-primary">Submit</button>
-        <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Save</button>
-        <?php
-        echo anchor('admin/module', 'Cancel', 'class="btn btn-default"');
-        echo form_close();
-        ?>
-      </div>
-    </form>
-  </div>
-</div>
 
-</div>
+      <div class="col-12 col-md-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h4>Group Name</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label>Your Name</label>
+                  <input type="text" class="form-control" required="">
+                  <div class="invalid-feedback">
+                    What's your name?
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Your Name</label>
+                  <input type="text" class="form-control" required="">
+                  <div class="invalid-feedback">
+                    What's your name?
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label>Message</label>
+                  <textarea class="form-control" required=""></textarea>
+                  <div class="invalid-feedback">
+                    What do you wanna say?
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Your Name</label>
+                  <input type="text" class="form-control" required="">
+                  <div class="invalid-feedback">
+                    What's your name?
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer text-right">
+            <button class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Save</button>
+            <?php
+        // echo anchor('admin/module', 'Cancel', 'class="btn btn-default"');
+        // echo form_close();
+            ?>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </form>
 </div>
