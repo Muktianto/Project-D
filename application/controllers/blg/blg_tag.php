@@ -27,16 +27,15 @@ class Blg_Tag extends CI_Controller {
     $this->load->view($this->form_builder->admin_temp, $data);
 }
 
-public function add(){
-    $this->form_validation->set_rules($this->m_tag->rules());
+public function create(){
+    $data=array(
+        'start'=>microtime(true),
+        'title'=>'Tag',
+        'content'=>$this->form_builder->form(),
+        'sub_content'=>null,
+    );
+    $this->load->view($this->form_builder->admin_temp, $data);
 
-
-    if ($this->form_validation->run()) {
-        $this->m_tag->save();
-        $this->session->set_flashdata('success', 'Berhasil disimpan');
-    }
-
-    $this->load->view("admin/tag/new_form");
 }
 
 public function update($id=null){

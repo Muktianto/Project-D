@@ -25,7 +25,9 @@ class Form_builder
 	public $bulk_input=false;
 
 	public $html='';
-	public $bricks=array(
+
+	// made bricks and bricks_form to show the diffs of them
+	public $bricks=array( 
 		'breadcrum_bar'=>'',
 		'header_content'=>'',
 		'table_header'=>'',
@@ -91,17 +93,21 @@ class Form_builder
 		return true;
 	}
 
-	public function datatable(){
-		// breadcrum bar
+	public function breadcrum($name, $button=''){
 		$this->bricks['breadcrum_bar'].='<div class="section-header">
-		<h1 class="section-title">DataTables</h1>&nbsp&nbsp&nbsp
-		<a href="#" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus" style="font-size: smaller;"></i> Add</a>
+		<h1 class="section-title">'.$name.'</h1>'.$button.'
 		<div class="section-header-breadcrumb">
 		<div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
 		<div class="breadcrumb-item"><a href="#">Modules</a></div>
 		<div class="breadcrumb-item">DataTables</div>
 		</div>
 		</div>';
+	}
+
+	public function datatable(){
+		// breadcrum bar
+		$add_button='&nbsp&nbsp&nbsp<a href="'.  site_url($this->module_page.'/create/').'" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus" style="font-size: smaller;"></i> Create</a>';
+		$this->breadcrum('MODULE NAME',$add_button);
 
 		// header content
 		$this->bricks['header_content'].='<div class="section-body">
@@ -151,7 +157,8 @@ class Form_builder
 			$this->bricks['table_body'].='<td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td>'; // bugs.. datatable wont sort 1,3,4 column
 
 			foreach ($this->header_map as $header_key => $header_val) {
-				$this->bricks['table_body'].='<td>'.$data_value[$header_key].'</td>';
+				// DEBUG
+				$this->bricks['table_body'].='<td>'.(empty($data_value[$header_key]) ? $header_key :$data_value[$header_key]).'</td>';
 			}
 			$this->bricks['table_body'].='</tr>';
 		}
@@ -167,14 +174,25 @@ class Form_builder
 		return $this->bricks;
 	}
 
-	public function build(){
+	public function build($form=false){
 		foreach ($this->bricks as $bricks_val) {
 			$this->html.=$bricks_val;
 		}
 		return $this->html;
 	}
 
-	public function form(){
+	public function form($data=null){
+		// breadcrum bar
+		$this->breadcrum('Create MODULE NAME');
+
+		// header content
+		$this->bricks_form['header_content'].='<div class="section-body"><form class="needs-validation" novalidate=""><div class="row">';
+
+		// content
+			$this->bricks_form['content']='';
+
+		// end of header content
+		$this->bricks_form['header_content_end'].='</div></form></div>';
 
 	}
 
