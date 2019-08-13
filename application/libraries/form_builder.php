@@ -5,6 +5,7 @@ class Form_builder
 {
 	public $attributes=array();
 
+	// default table
 	private $access_table='sso_access';
 	private $application_table='sso_application';
 	private $module_table='sso_module';
@@ -20,13 +21,16 @@ class Form_builder
 	public $list_view='';
 	public $form_view='';
 
+	public $primary_key=array();
+	public $primary_key_string='';
+
 	public $header_map=array();
 	public $data_map=array();
 	public $bulk_input=false;
 
 	public $html='';
 
-	// made bricks and bricks_form to show the diffs of them
+	// made bricks and bricks_form to show the differences of them
 	public $bricks=array( 
 		'breadcrum_bar'=>'',
 		'header_content'=>'',
@@ -45,16 +49,25 @@ class Form_builder
 
 	public function init($model, $controller_id, $uri_string) {
 		$this->module_page=$uri_string;
-		$this->list_view=$uri_string.'/'.$model.'/list_view';
-		$this->form_view=$uri_string.'/'.$model.'/form_view';
+		// $this->list_view=$uri_string.'/'.$model.'/list_view';
+		// $this->form_view=$uri_string.'/'.$model.'/form_view';
+
 
 		return true;
 	}
 
+	public function update_link(){
+
+	}
+
+	public function delete_link(){
+
+	}
+
+	// generate rows-map from model's attributes and its data
 	public function mapping($attributes, $data_table, $auto_build_mapping=true){
 		$this->data_map=$data_table;
 		// table header
-		$pk='';
 		foreach ($attributes as $model_key => $model_value) {
 			if(array_key_exists('display', $model_value) AND $model_value['display']){
 				$this->header_map[$model_key]=array(
@@ -65,9 +78,13 @@ class Form_builder
 				);
 			}
 			if(array_key_exists('primary_key', $model_value) AND $model_value['primary_key']){
-				$pk.=empty($pk)? $model_key : '|'.$model_key;
+				$this->primary_key_string.=empty($pk)? $model_key : '|'.$model_key;
+				$this->primary_key[]=$model_value;
 			}
+
+
 		}
+
 		$this->header_map['action']=array(
 			'data'=>$pk,
 			'label'=>'Action',
@@ -82,7 +99,9 @@ class Form_builder
 			unset($data_table[$data_key][UPDATE_BY]);
 			unset($data_table[$data_key][UPDATE_DATE]);
 
-			$data_table[$data_key]['action']='<a href="#" class="btn btn-secondary btn-sm btn-info">Detail</a>';
+
+			// $data_table[$data_key]['action']='<a href="#" class="btn btn-secondary btn-sm btn-info">Detail</a>';
+			$data_table[$data_key]['action']=$this->update_link().' '.$this->delete_link();
 		}
 		$this->data_map=$data_table;
 
@@ -130,7 +149,7 @@ class Form_builder
 			</th>';	
 		}
 
-		$this->bricks['table_header'].='<th style="display:none;">X</th><th style="display:none;">X</th><th style="display:none;">X</th><th style="display:none;">X</th>';  // bugs.. datatable wont sort 1,3,4 column
+		$this->bricks['table_header'].='<th style="display:none;">X</th><th style="display:none;">X</th><th style="display:none;">X</th><th style="display:none;">X</th>';  // BUG.. datatable wont sort 1,3,4 column
 
 		// column header
 		foreach ($this->header_map as $header_val) {
@@ -154,7 +173,7 @@ class Form_builder
 				</td>';
 			}
 
-			$this->bricks['table_body'].='<td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td>'; // bugs.. datatable wont sort 1,3,4 column
+			$this->bricks['table_body'].='<td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td>'; // BUG.. datatable wont sort 1,3,4 column
 
 			foreach ($this->header_map as $header_key => $header_val) {
 				// DEBUG

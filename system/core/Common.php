@@ -69,6 +69,17 @@ function debug($data, $exit = true) {
 		exit();
 }
 
+
+function encode($data) {
+	return strrev(str_replace('=', '_', base64_encode('immi2012' . $data)));
+}
+
+function decode($data) {
+	$decrypted = explode('immi2012', base64_decode(str_replace('_', '=', strrev($data))));
+	return $decrypted[1];
+}
+
+
 // -------------------------------- IGNITED: END OF DEFINE CUSTOM GLOBAL FUNCTION ------------------------------------
 
 if ( ! function_exists('is_php'))

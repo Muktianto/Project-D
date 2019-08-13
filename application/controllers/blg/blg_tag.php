@@ -16,7 +16,9 @@ class Blg_Tag extends CI_Controller {
 
   public function index() {
     $data_table=$this->tag->get_all();
+    // debug($data_table);
     $this->form_builder->mapping($this->tag->attributes, $data_table);
+    // debug($this->form_builder->build());
 
     $data=array(
         'start'=>microtime(true),

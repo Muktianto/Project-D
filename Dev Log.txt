@@ -1,0 +1,92 @@
+2019-07-23 Mon
+	|__ system/core/Common.php
+	|	|__ ADD: fungsi2 global, misal debug()
+	|__ application/libraries/form_builder.php
+		|__ PENDING: required fields param to custom view
+
+2019-07-24 Tue
+	|__ application/config/constants.php
+		|__ ADD: table constants 
+
+2019-07-25 Thu
+	|__ application/libraries/form_builder.php
+		|__ PENDING: datatable(); filter aneh, col 1,3,4 pasti no filter, sementara skip colom
+
+2019-08-13 Tue
+	|__ system/core/Common.php 
+	|	|__ PENDING: fungsi encode & decode perlu dynamic param, sekarang 'immi2012'
+	|__ application/libraries/form_builder.php
+		|__ ADD: fungsi2 generate action button. ex update & delete
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
