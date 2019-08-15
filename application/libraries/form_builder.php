@@ -22,8 +22,10 @@ class Form_builder
 	public $form_view='';
 
 	public $primary_key=array();
-	public $primary_key_string='';
+	public $current_primary_key=array();
+	public $current_primary_key_str='';
 
+	public $front_action=false;
 	public $header_map=array();
 	public $data_map=array();
 	public $bulk_input=false;
@@ -52,17 +54,10 @@ class Form_builder
 		// $this->list_view=$uri_string.'/'.$model.'/list_view';
 		// $this->form_view=$uri_string.'/'.$model.'/form_view';
 
-
 		return true;
 	}
 
-	public function update_link(){
-
-	}
-
-	public function delete_link(){
-
-	}
+	
 
 	// generate rows-map from model's attributes and its data
 	public function mapping($attributes, $data_table, $auto_build_mapping=true){
@@ -70,46 +65,88 @@ class Form_builder
 		// table header
 		foreach ($attributes as $model_key => $model_value) {
 			if(array_key_exists('display', $model_value) AND $model_value['display']){
-				$this->header_map[$model_key]=array(
-					// 'data'=>$model_key,
-					'label'=>$model_value['label'],
-					// 'sortable'=>array_key_exists('sortable', $model_value)? $model_value['sortable'] : false,
-					// 'alias'=>''
-				);
+				$this->header_map[$model_key]= $model_value;
+				// $this->header_map[$model_key]=array(
+				// 	// 'data'=>$model_key,
+				// 	'label'=>$model_value['label'],
+
+				// 	// 'sortable'=>array_key_exists('sortable', $model_value)? $model_value['sortable'] : false,
+				// 	// 'alias'=>''
+				// );
 			}
 			if(array_key_exists('primary_key', $model_value) AND $model_value['primary_key']){
-				$this->primary_key_string.=empty($pk)? $model_key : '|'.$model_key;
-				$this->primary_key[]=$model_value;
+				$this->primary_key[]=$model_key;
 			}
 
 
 		}
 
-		$this->header_map['action']=array(
-			'data'=>$pk,
+		// action column location
+		$action_col=array(
+			'data'=>$this->primary_key,
 			'label'=>'Action',
-			// 'sortable'=>false,
+			'width'=>100,
 		);
+		if($this->front_action){
+			$header_map['action']=$action_col;
+			$this->header_map=array_merge($header_map,$this->header_map);
+		}else{
+			$this->header_map['action']=$action_col;
+		}
+		// end of action column location
+		// end of table header
 
 
 		// list data
 		foreach ($data_table as $data_key => $data_value) {
+			$this->current_primary_key_str='';
 			unset($data_table[$data_key][CREATE_BY]);
 			unset($data_table[$data_key][CREATE_DATE]);
 			unset($data_table[$data_key][UPDATE_BY]);
 			unset($data_table[$data_key][UPDATE_DATE]);
 
+			foreach ($this->primary_key as $pk_key) {
+				// $this->current_primary_key[$pk_key]=$data_value[$pk_key];
+				$this->current_primary_key_str .= empty($this->current_primary_key_str) ? $data_value[$pk_key] : '|'.$data_value[$pk_key];
+
+			}
 
 			// $data_table[$data_key]['action']='<a href="#" class="btn btn-secondary btn-sm btn-info">Detail</a>';
-			$data_table[$data_key]['action']=$this->update_link().' '.$this->delete_link();
+			// $data_table[$data_key]['action']=$this->update_link().' '.$this->delete_link();
+			$action_buttons=$this->update_link().$this->delete_link();
+			// $data_table[$data_key]['action']=$this->update_link().$this->delete_link();
+
+			if($this->front_action){
+				$header_map_token['action']=$action_buttons;
+				$data_table[$data_key]=array_merge($header_map_token,$data_table[$data_key]);
+			}else{
+				$data_table[$data_key]['action']=$action_buttons;
+			}
 		}
+
 		$this->data_map=$data_table;
+
+
+		
+		// debug($this->header_map);
 
 		if($auto_build_mapping){
 			$this->datatable();
 		}
 
 		return true;
+	}
+
+	public function update_link($key='', $label='View', $color='info', $icon='edit', $icon_loc='left'){
+		$key=empty($key)?$this->current_primary_key_str:$key;
+		return ' <a href="'.site_url($this->module_page.'/update/') . encode('update'.$key) .'" class="btn btn-sm btn-icon icon-'.$icon_loc.' btn-outline-'.$color.'"><i class="fas fa-'.$icon.'"></i> '.$label.'</a>';
+
+		// return '<a href="'.site_url('admin/module/view') . '/' . '$isi[]' .'" class="label label-'.$color.'" data-placement="left" data-toggle="tooltip" title="'.$label.'">ssssssssss<span class="fa fa-'.$icon.'"></span></a>';
+	}
+
+	public function delete_link($key=''){
+		$key=empty($key)?$this->current_primary_key_str:$key;
+		return ' <a href="'.site_url($this->module_page.'/delete/') . encode('delete'.$key) .'" class="btn btn-sm btn-icon icon-left btn-outline-danger"><i class="fas fa-trash"></i> Delete</a>';
 	}
 
 	public function breadcrum($name, $button=''){
@@ -135,7 +172,7 @@ class Form_builder
 		<div class="card  card-primary">
 		<div class="card-body">
 		<div class="table-responsive">
-		<table class="table table-striped" id="table-2">';
+		<table class="table table-striped" id="table-2" style="white-space: nowrap">';
 
 		// table header
 		$this->bricks['table_header'].='<thead><tr>';
@@ -153,7 +190,8 @@ class Form_builder
 
 		// column header
 		foreach ($this->header_map as $header_val) {
-			$this->bricks['table_header'].='<th>'.$header_val['label'].'</th>';
+			$width=!empty($header_val['width'])?' width="'.$header_val['width'].'"' : '';
+			$this->bricks['table_header'].='<th'.$width.'>'.$header_val['label'].'</th>';
 		}
 		// end of table header
 		$this->bricks['table_header'].='</tr></thead>';
@@ -177,7 +215,8 @@ class Form_builder
 
 			foreach ($this->header_map as $header_key => $header_val) {
 				// DEBUG
-				$this->bricks['table_body'].='<td>'.(empty($data_value[$header_key]) ? $header_key :$data_value[$header_key]).'</td>';
+				$align=!empty($header_val['align'])?' align="'.$header_val['align'].'"':'';
+				$this->bricks['table_body'].='<td'.$align.'>'.(empty($data_value[$header_key]) ? $header_key :$data_value[$header_key]).'</td>';
 			}
 			$this->bricks['table_body'].='</tr>';
 		}
@@ -208,7 +247,7 @@ class Form_builder
 		$this->bricks_form['header_content'].='<div class="section-body"><form class="needs-validation" novalidate=""><div class="row">';
 
 		// content
-			$this->bricks_form['content']='';
+		$this->bricks_form['content']='';
 
 		// end of header content
 		$this->bricks_form['header_content_end'].='</div></form></div>';

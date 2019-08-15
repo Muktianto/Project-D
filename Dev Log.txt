@@ -18,8 +18,12 @@
 	|__ application/libraries/form_builder.php
 		|__ ADD: fungsi2 generate action button. ex update & delete
 
-
-
+2019-08-15 Thu
+	|__ application/libraries/form_builder.php
+	|	|__ ADD: penambahan fitur2 tabel, misal slign, link, action loc, dll
+	|	|__ PENDING: perbaiki encode/decode id
+	|__ system/core/Common.php 
+		|__ UPDATE: fungsi debug, jd bisa gelap dan polos
 
 
 

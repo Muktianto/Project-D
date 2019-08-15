@@ -53,10 +53,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 // -------------------------------- IGNITED: DEFINE CUSTOM GLOBAL FUNCTION ------------------------------------
 
-function debug($data, $exit = true) {
-	if (empty($data) && $exit)
+function debug($data, $exit = true, $simple='') {
+	if (empty($data) && $exit){
 		echo 'Data is empty';
-	echo '<div style="background-color: #2a2734; border-radius: .50rem; color: #ffcc99; border: none; padding: 0px 20px; font-weight: 600;display: inline-block; margin-bottom: 7px"><pre>';
+	}
+	$style=!empty($simple)? '' : ' style="background-color: #2a2734; border-radius: .50rem; color: #ffcc99; border: none; padding: 0px 20px; font-weight: 600;display: inline-block; margin-bottom: 7px"';
+	echo '<div '.$style.'><pre>';
 	if (is_object($data)) {
 		var_dump($data);
 	} else if (is_array($data)) {

@@ -14,6 +14,7 @@ class M_tag extends CI_Model {
 				'primary_key' => true,
 				'label'=>'Tag ID',
 				'display'=>true,
+				'align'=>'right',
 			),
 			'tag_name'=>array(
 				'input'=>'text',
