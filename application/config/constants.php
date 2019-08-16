@@ -90,3 +90,6 @@ define('CREATE_BY', 'create_by');
 define('CREATE_DATE', 'create_date');
 define('UPDATE_BY', 'update_by');
 define('UPDATE_DATE', 'update_date');
+
+// for encrypt
+define('ENCRYPTION_KEY', 'f3DHl7m');

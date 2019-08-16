@@ -72,13 +72,43 @@ function debug($data, $exit = true, $simple='') {
 }
 
 
-function encode($data) {
-	return strrev(str_replace('=', '_', base64_encode('immi2012' . $data)));
+function encode($value) {
+	if (!$value) {
+		return false;
+	}
+	$text = $value.substr(time(), -3);
+	$text = trim($text);
+	$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+	$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+	$crypttext = mcrypt_encrypt(MCRYPT_RIJNDAEL_256, ENCRYPTION_KEY, $text, MCRYPT_MODE_ECB, $iv);
+	return trim(safe_b64encode($crypttext));
+
 }
 
-function decode($data) {
-	$decrypted = explode('immi2012', base64_decode(str_replace('_', '=', strrev($data))));
-	return $decrypted[1];
+function decode($value) {
+	if (!$value) {
+		return false;
+	}
+	$crypttext = safe_b64decode($value);
+	$iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB);
+	$iv = mcrypt_create_iv($iv_size, MCRYPT_RAND);
+	$decrypttext = mcrypt_decrypt(MCRYPT_RIJNDAEL_256, ENCRYPTION_KEY, $crypttext, MCRYPT_MODE_ECB, $iv);
+	$decrypttext = substr(trim($decrypttext), 0, -3);
+
+	return trim($decrypttext);
+}
+
+function safe_b64encode($string) {
+	return strrev(str_replace(array('+', '/', '='), array('-', '_', ''), base64_encode($string)));
+}
+
+function safe_b64decode($string) {
+	$data = str_replace(array('-', '_'), array('+', '/'), strrev($string));
+	$mod4 = strlen($data) % 4;
+	if ($mod4) {
+		$data .= substr('====', $mod4);
+	}
+	return base64_decode($data);
 }
 
 

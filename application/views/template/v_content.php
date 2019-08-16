@@ -5,8 +5,10 @@
   <div class="section-header-breadcrumb">
     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
     <div class="breadcrumb-item"><a href="#">Modules</a></div>
-    <div class="breadcrumb-item">DataTables</div>
+    <div class="breadcrumb-item">DataTables</div>  
+    &nbsp;&nbsp;&nbsp;&nbsp;<a href="'.  site_url($this->module_page.'/create/').'"><span class="badge badge-primary"><i class="fa fa-sync-alt"></i></span></a>
   </div>
+
 </div>
 
 <div class="section-body">
@@ -31,18 +33,18 @@
                   </th> -->
                   <th>Due Date</th>
                   <!-- <th style="display:none;">as</th>
-                  <th style="display:none;"></th> -->
-                  <th>Task Name</th>
-                  <th>Progress</th>
-                  <th>Members</th>
-                  <th>Status</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
+                    <th style="display:none;"></th> -->
+                    <th>Task Name</th>
+                    <th>Progress</th>
+                    <th>Members</th>
+                    <th>Status</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
 
-              <tbody>
-                <tr>
+                <tbody>
+                  <tr>
                   <!-- <td>
                     <div class="custom-checkbox custom-control">
                       <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
@@ -51,16 +53,16 @@
                   </td> -->
                   <td>sdf a mobile app</td>
                   <!-- <td style="display:none;">gh a mobilasde app</td>
-                  <td style="display:none;">6ny a mobiasdasdle app</td> -->
-                  <td>6ny a mobilasde app</td>
-                  <td>6ny a mobile app</td>
-                  <td>6ny a mobile app</td>
-                  <td>45y a mobile app</td>
+                    <td style="display:none;">6ny a mobiasdasdle app</td> -->
+                    <td>6ny a mobilasde app</td>
+                    <td>6ny a mobile app</td>
+                    <td>6ny a mobile app</td>
+                    <td>45y a mobile app</td>
 
-                  <td><div class="badge badge-success">Completed</div></td>
-                  <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                </tr>
-                <tr>
+                    <td><div class="badge badge-success">Completed</div></td>
+                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                  </tr>
+                  <tr>
                   <!-- <td>
                     <div class="custom-checkbox custom-control">
                       <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
@@ -69,16 +71,16 @@
                   </td> -->
                   <td>sdf a efw app</td>
                   <!-- <td style="display:none;">gh a mobi2dqwd3rle app</td>
-                  <td style="display:none;">gh a mobi23qwdwqdrle app</td> -->
-                  <td>gh a mobi23qwdwrle app</td>
-                  <td>6ny a mobi23wqrle app</td>
-                  <td>6ny a mobi23qwrle app</td>
-                  <td>45y a mob23rile app</td>
+                    <td style="display:none;">gh a mobi23qwdwqdrle app</td> -->
+                    <td>gh a mobi23qwdwrle app</td>
+                    <td>6ny a mobi23wqrle app</td>
+                    <td>6ny a mobi23qwrle app</td>
+                    <td>45y a mob23rile app</td>
 
-                  <td><div class="badge badge-success">Completed</div></td>
-                  <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                </tr>
-                <tr>
+                    <td><div class="badge badge-success">Completed</div></td>
+                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                  </tr>
+                  <tr>
                   <!-- <td>
                     <div class="custom-checkbox custom-control">
                       <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
@@ -87,17 +89,17 @@
                   </td> -->
                   <td>sdf a mobilwdq67e aqwdpp</td>
                   <!-- <td style="display:none;">gh a mthroqwbiqwdle app</td>
-                  <td style="display:none;">gh a mthroqwb76jqch76jile app</td> -->
-                  <td>gh a mthroqwqwbile app</td>
-                  <td>gh a mthroqwbile app</td>
-                  <td>6ny a mof4bile app</td>
-                  <td>45y a mobiq2frq24le app</td>
+                    <td style="display:none;">gh a mthroqwb76jqch76jile app</td> -->
+                    <td>gh a mthroqwqwbile app</td>
+                    <td>gh a mthroqwbile app</td>
+                    <td>6ny a mof4bile app</td>
+                    <td>45y a mobiq2frq24le app</td>
 
-                  <td><div class="badge badge-success">Completed</div></td>
-                  <td><a href="#" class="btn btn-secondary">Detail</a></td>
-                </tr>
+                    <td><div class="badge badge-success">Completed</div></td>
+                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                  </tr>
 
-                
+
                <!--  <tr>
                   <td>
                     <div class="custom-checkbox custom-control">

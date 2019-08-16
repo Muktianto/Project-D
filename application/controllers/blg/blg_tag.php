@@ -15,28 +15,34 @@ class Blg_Tag extends CI_Controller {
   }
 
   public function index() {
+    // preparing
     $data_table=$this->tag->get_all();
-    // debug($data_table);
+    // processing
     $this->form_builder->mapping($this->tag->attributes, $data_table);
-    // debug($this->form_builder->build());
-
-    $data=array(
+    // rendering
+    $this->load->view($this->form_builder->admin_temp, array(
         'start'=>microtime(true),
         'title'=>'Tag',
         'content'=>$this->form_builder->build(),
         'sub_content'=>null,
-    );
-    $this->load->view($this->form_builder->admin_temp, $data);
+    ));
 }
 
 public function create(){
-    $data=array(
-        'start'=>microtime(true),
-        'title'=>'Tag',
-        'content'=>$this->form_builder->form(),
-        'sub_content'=>null,
-    );
-    $this->load->view($this->form_builder->admin_temp, $data);
+    // $data=array(
+    //     'start'=>microtime(true),
+    //     'title'=>'Tag',
+    //     'content'=>$this->form_builder->form(),
+    //     'sub_content'=>null,
+    // );
+    // $this->load->view($this->form_builder->admin_temp, $data);
+    $data['start']=microtime(true);
+    $data['debug']='template/v_add';
+        // $data['debug']='template/v_content';
+        // $x=$this->auto_global->get_session();
+        // $x=$this->get_sessionX();
+        // echo $x;exit();
+    $this->load->view('template/v_admin_layout',$data);
 
 }
 

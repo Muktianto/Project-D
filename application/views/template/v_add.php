@@ -105,8 +105,8 @@
 
           </div>
           <div class="card-footer text-right">
-            <button class="btn btn-primary">Submit</button>
-            <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> Save</button>
+            <a href="'.  site_url($this->module_page.'/create/').'" class="btn btn-icon icon-left btn-secondary"><i class="fa fa-chevron-left"></i> Cancel</a>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>
             <?php
         // echo anchor('admin/module', 'Cancel', 'class="btn btn-default"');
         // echo form_close();
