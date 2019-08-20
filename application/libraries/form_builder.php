@@ -25,7 +25,13 @@ class Form_builder
 	public $current_primary_key=array();
 	public $current_primary_key_str='';
 
-	public $front_action=false;
+	public $starter=array();
+	public $config=array(
+		'front_action'=>false,
+		'create_buton'=>false,
+		'addition_button'=>'',
+	);
+
 	public $header_map=array();
 	public $data_map=array();
 	public $bulk_input=false;
@@ -33,13 +39,17 @@ class Form_builder
 	public $html='';
 
 	// made bricks and bricks_form to show the differences of them
-	public $bricks=array( 
+	public $bricks=array(
 		'breadcrum_bar'=>'',
 		'header_content'=>'',
+		'card'=>'',
 		'table_header'=>'',
 		'table_body'=>'',
+		'card_end'=>'',
+		'subcontent'=>'',
 		'header_content_end'=>'',
 	);
+	
 	public $bricks_form=array(
 		'breadcrum_bar'=>'',
 		'header_content'=>'',
@@ -51,8 +61,13 @@ class Form_builder
 
 	public function init($model, $controller_id, $uri_string) {
 		$this->module_page=$uri_string;
+		$this->starter=array(
+			'start'=>microtime(true),
+			'title'=>'Tag',
+		);
 		// $this->list_view=$uri_string.'/'.$model.'/list_view';
 		// $this->form_view=$uri_string.'/'.$model.'/form_view';
+
 
 		return true;
 	}
@@ -60,7 +75,7 @@ class Form_builder
 	
 
 	// generate rows-map from model's attributes and its data
-	public function mapping($attributes, $data_table, $auto_build_mapping=true){
+	public function mapping($attributes, $data_table, $subcontent='', $auto_build_mapping=true){
 		$this->data_map=$data_table;
 		// table header
 		foreach ($attributes as $model_key => $model_value) {
@@ -87,7 +102,7 @@ class Form_builder
 			'label'=>'Action',
 			'width'=>100,
 		);
-		if($this->front_action){
+		if($this->config['front_action']){
 			$header_map['action']=$action_col;
 			$this->header_map=array_merge($header_map,$this->header_map);
 		}else{
@@ -116,7 +131,7 @@ class Form_builder
 			$action_buttons=$this->update_link().$this->delete_link();
 			// $data_table[$data_key]['action']=$this->update_link().$this->delete_link();
 
-			if($this->front_action){
+			if($this->config['front_action']){
 				$header_map_token['action']=$action_buttons;
 				$data_table[$data_key]=array_merge($header_map_token,$data_table[$data_key]);
 			}else{
@@ -126,7 +141,7 @@ class Form_builder
 
 		$this->data_map=$data_table;
 
-
+		$this->bricks['subcontent']=$subcontent;
 		
 		// debug($this->header_map);
 
@@ -171,8 +186,10 @@ class Form_builder
 		<div class="row">
 		<div class="col-12">
 		<div class="card  card-primary">
-		<div class="card-body">
-		<div class="table-responsive">
+		<div class="card-body">';
+
+		// card, sub content is placed inside this card 
+		$this->bricks['card'].='<div class="table-responsive">
 		<table class="table table-striped" id="table-2" style="white-space: nowrap">';
 
 		// table header
@@ -224,20 +241,39 @@ class Form_builder
 		
 
 		// end of table body
-		$this->bricks['table_body'].=' <tbody>';
+		$this->bricks['table_body'].=' </tbody>';
+
+		// end of card
+		$this->bricks['card_end'].='</table></div>';
+
+		// $this->bricks['subcontent'].='';
 
 		// end of header content
-		$this->bricks['header_content_end'].='</table></div></div>
-		</div></div></div></div>';
+		$this->bricks['header_content_end'].='</div></div></div></div></div>';
+
 
 		return $this->bricks;
 	}
 
-	public function build($form=false){
-		foreach ($this->bricks as $bricks_val) {
+	// main_build / build / build_form => opttional, either using diff fucntion or using main build + param, 
+	public function main_build($datatable=true){
+		$the_bricks=$datatable ? $this->bricks : $this->bricks_form;
+		foreach ($the_bricks as $bricks_val) {
 			$this->html.=$bricks_val;
 		}
-		return $this->html;
+		return array(
+			'content'=>$this->html,
+			'title'=>$this->starter['title'],
+			'start'=>$this->starter['start'],
+		);
+	}
+
+	public function build(){
+		return $this->main_build(true);
+	}
+
+	public function build_form(){
+		return $this->main_build(false);
 	}
 
 	public function form($data=null){

@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title><?php echo !empty($title) ? $title : 'Untitled' ?></title>
+  <title><?php echo !empty($data['title']) ? $data['title'] : 'Untitled' ?></title>
   <link rel="icon" href="<?php echo base_url('assets/admin/img/favicon/' . rand(1, 113) . '.png') ?>" >
   <?php 
   $stylesheet='<link rel="stylesheet" href="';
@@ -94,10 +94,10 @@
       <section class="section">
         <!-- LOAD CONTENT -->
         <?php 
-        if(empty($content)){
+        if(!empty($debug)){
           $this->load->view($debug);
         }else{
-          echo  $content; 
+          echo  $data['content']; 
         }
 
         ?>
@@ -110,8 +110,8 @@
       </div>
       <div class="footer-right">
         <?php  
-        if(!empty($start)){
-          echo 'Elapsed time '.number_format((microtime(true) - $start),4).'(s).';
+        if(!empty($data['start'])){
+          echo 'Elapsed time '.number_format((microtime(true) - $data['start']),4).'(s).';
         }
         ?>
       </div>

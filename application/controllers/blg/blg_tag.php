@@ -3,8 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Blg_Tag extends CI_Controller {
 
-    private $attributes;
-
     public function __construct(){
       parent::__construct();
 
@@ -21,14 +19,18 @@ class Blg_Tag extends CI_Controller {
     $this->form_builder->mapping($this->tag->attributes, $data_table);
     // rendering
     $this->load->view($this->form_builder->admin_temp, array(
-        'start'=>microtime(true),
-        'title'=>'Tag',
-        'content'=>$this->form_builder->build(),
-        'sub_content'=>null,
+        'data'=>$this->form_builder->build(),
+        // 'debug'=>'template/v_content',
     ));
 }
 
 public function create(){
+    $this->load->view($this->form_builder->admin_temp, array(
+        'data'=>$this->form_builder->build_form(),
+    ));
+}
+
+public function create_debug(){ //delete later
     // $data=array(
     //     'start'=>microtime(true),
     //     'title'=>'Tag',
@@ -42,7 +44,12 @@ public function create(){
         // $x=$this->auto_global->get_session();
         // $x=$this->get_sessionX();
         // echo $x;exit();
-    $this->load->view('template/v_admin_layout',$data);
+    $this->load->view('template/v_admin_layout', array(
+        'start'=>microtime(true),
+        'title'=>'Create Tag',
+        'content'=>$this->form_builder->build(),
+        'sub_content'=>null,
+    ));
 
 }
 
