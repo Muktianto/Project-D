@@ -25,6 +25,9 @@ class Blg_Tag extends CI_Controller {
 }
 
 public function create(){
+    // processing
+    $this->form_builder->mapping($this->tag->attributes, $data_table);
+    // rendering
     $this->load->view($this->form_builder->admin_temp, array(
         'data'=>$this->form_builder->build_form(),
     ));
@@ -38,8 +41,8 @@ public function create_debug(){ //delete later
     //     'sub_content'=>null,
     // );
     // $this->load->view($this->form_builder->admin_temp, $data);
-    $data['start']=microtime(true);
-    $data['debug']='template/v_add';
+    // $data['start']=microtime(true);
+    // $data['debug']='template/v_add';
         // $data['debug']='template/v_content';
         // $x=$this->auto_global->get_session();
         // $x=$this->get_sessionX();
@@ -49,6 +52,7 @@ public function create_debug(){ //delete later
         'title'=>'Create Tag',
         'content'=>$this->form_builder->build(),
         'sub_content'=>null,
+        'debug'=>'template/v_add',
     ));
 
 }

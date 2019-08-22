@@ -18,6 +18,7 @@ class Form_builder
 
 	public $admin_temp='template/v_admin_layout';
 	public $module_page='';
+	public $module_name='';
 	public $list_view='';
 	public $form_view='';
 
@@ -57,13 +58,54 @@ class Form_builder
 		'header_content_end'=>'',
 	);
 
-	
+	// map prediction
+	public $form_structure=array(
+		'group_id_1'=>array(
+			'label'=>'Group 1',
+			'color'=>'primary', // default primary
+			'data'=>array(
+				'key_1'=>array(
+					'label'=>'Key 1',
+					'input'=>'text',
+					'value'=>null,
+					'validation'=>array(),
+					'column'=>1,
+				),
+				'key_2'=>array(
+					'label'=>'Key 2',
+					'input'=>'textarea',
+					'value'=>null,
+					'validation'=>array(),
+					'column'=>1,
+				),
+			),
+		),
+		'group_id_2'=>array(
+			'label'=>'Group 2',
+			'color'=>'success', // default primary
+			'data'=>array(
+				'key_1'=>array(
+					'label'=>'Key 1',
+					'input'=>'text',
+					'value'=>null,
+					'validation'=>array('required',''),
+				),
+				'key_2'=>array(
+					'label'=>'Key 2',
+					'input'=>'textarea',
+					'value'=>null,
+					'validation'=>array(),
+				),
+			),
+		),
+	);
 
 	public function init($model, $controller_id, $uri_string) {
 		$this->module_page=$uri_string;
+		$this->module_name='Tag';
 		$this->starter=array(
 			'start'=>microtime(true),
-			'title'=>'Tag',
+			'title'=>$this->module_name,
 		);
 		// $this->list_view=$uri_string.'/'.$model.'/list_view';
 		// $this->form_view=$uri_string.'/'.$model.'/form_view';
@@ -71,8 +113,6 @@ class Form_builder
 
 		return true;
 	}
-
-	
 
 	// generate rows-map from model's attributes and its data
 	public function mapping($attributes, $data_table, $subcontent='', $auto_build_mapping=true){
@@ -165,7 +205,7 @@ class Form_builder
 	}
 
 	public function breadcrum($name, $button=''){
-		$this->bricks['breadcrum_bar'].='<div class="section-header">
+		return '<div class="section-header">
 		<h1 class="section-title">'.$name.'</h1>'.$button.'
 		<div class="section-header-breadcrumb">
 		<div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
@@ -179,7 +219,8 @@ class Form_builder
 	public function datatable(){
 		// breadcrum bar
 		$add_button='&nbsp&nbsp&nbsp<a href="'.  site_url($this->module_page.'/create/').'" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus" style="font-size: smaller;"></i> Create</a>';
-		$this->breadcrum('MODULE NAME',$add_button);
+
+		$this->bricks['breadcrum_bar'] .= $this->breadcrum($this->module_name, $add_button);
 
 		// header content
 		$this->bricks['header_content'].='<div class="section-body">
@@ -239,7 +280,6 @@ class Form_builder
 			$this->bricks['table_body'].='</tr>';
 		}
 		
-
 		// end of table body
 		$this->bricks['table_body'].=' </tbody>';
 
@@ -278,7 +318,7 @@ class Form_builder
 
 	public function form($data=null){
 		// breadcrum bar
-		$this->breadcrum('Create MODULE NAME');
+		$this->bricks_form['breadcrum_bar'] .= $this->breadcrum('Create '.$this->module_name);
 
 		// header content
 		$this->bricks_form['header_content'].='<div class="section-body"><form class="needs-validation" novalidate=""><div class="row">';
