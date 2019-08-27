@@ -63,6 +63,7 @@ class Form_builder
 		'group_id_1'=>array(
 			'label'=>'Group 1',
 			'color'=>'primary', // default primary
+			'col_len'=>6, // default 12
 			'data'=>array(
 				'key_1'=>array(
 					'label'=>'Key 1',
@@ -80,9 +81,11 @@ class Form_builder
 				),
 			),
 		),
+
 		'group_id_2'=>array(
 			'label'=>'Group 2',
 			'color'=>'success', // default primary
+			'col_len'=>5, // default 12
 			'data'=>array(
 				'key_1'=>array(
 					'label'=>'Key 1',
@@ -93,6 +96,38 @@ class Form_builder
 				'key_2'=>array(
 					'label'=>'Key 2',
 					'input'=>'textarea',
+					'value'=>null,
+					'validation'=>array(),
+				),
+			),
+		),
+		'group_id_3'=>array(
+			'label'=>'Group 3',
+			'color'=>'danger', // default primary
+			'data'=>array(
+				'key_1'=>array(
+					'label'=>'Key 1',
+					'input'=>'text',
+					'value'=>null,
+					'validation'=>array('required',''),
+				),
+				'key_2'=>array(
+					'label'=>'Key 2',
+					'input'=>'textarea',
+					'value'=>null,
+					'validation'=>array(),
+				),
+				'key_3'=>array(
+					'label'=>'Key 3',
+					'input'=>'text',
+					'value'=>null,
+					'column'=>2,
+					'validation'=>array('required',''),
+				),
+				'key_4'=>array(
+					'label'=>'Key 5',
+					'input'=>'textarea',
+					'column'=>2,
 					'value'=>null,
 					'validation'=>array(),
 				),
