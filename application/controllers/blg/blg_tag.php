@@ -26,7 +26,8 @@ class Blg_Tag extends CI_Controller {
 
 public function create(){
     // processing
-    $this->form_builder->mapping($this->tag->attributes, $data_table);
+    // $this->form_builder->mapping($this->tag->attributes, $data_table);
+    $this->form_builder->form();
     // rendering
     $this->load->view($this->form_builder->admin_temp, array(
         'data'=>$this->form_builder->build_form(),

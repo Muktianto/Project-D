@@ -53,9 +53,11 @@ class Form_builder
 	
 	public $bricks_form=array(
 		'breadcrum_bar'=>'',
-		'header_content'=>'',
+		'section'=>'',
+		'form'=>'',
 		'content'=>'',
-		'header_content_end'=>'',
+		'form_end'=>'',
+		'section_end'=>'',
 	);
 
 	// map prediction
@@ -68,9 +70,10 @@ class Form_builder
 				'key_1'=>array(
 					'label'=>'Key 1',
 					'input'=>'text',
-					'value'=>null,
+					'value'=>'VALLLLLLLLLL',
 					'validation'=>array(),
 					'column'=>1,
+					'warning_label'=>'eh isi cuk',
 				),
 				'key_2'=>array(
 					'label'=>'Key 2',
@@ -78,12 +81,13 @@ class Form_builder
 					'value'=>null,
 					'validation'=>array(),
 					'column'=>1,
+					'warning_label'=>'ini juga',
 				),
 			),
 		),
 
 		'group_id_2'=>array(
-			'label'=>'Group 2',
+			// 'label'=>'Group 2',
 			'color'=>'success', // default primary
 			'col_len'=>5, // default 12
 			'data'=>array(
@@ -106,7 +110,7 @@ class Form_builder
 			'color'=>'danger', // default primary
 			'data'=>array(
 				'key_1'=>array(
-					'label'=>'Key 1',
+					// 'label'=>'Key 1',
 					'input'=>'text',
 					'value'=>null,
 					'validation'=>array('required',''),
@@ -352,17 +356,74 @@ class Form_builder
 	}
 
 	public function form($data=null){
+
 		// breadcrum bar
 		$this->bricks_form['breadcrum_bar'] .= $this->breadcrum('Create '.$this->module_name);
-
-		// header content
-		$this->bricks_form['header_content'].='<div class="section-body"><form class="needs-validation" novalidate=""><div class="row">';
+		// header section
+		$this->bricks_form['section'].='<div class="section-body">';
+		// header form
+		$this->bricks_form['form'].=' <form class="needs-validation" novalidate=""><div class="row">';
 
 		// content
-		$this->bricks_form['content']='';
+		// debug($this->form_structure);
+		$content='';
+		foreach ($this->form_structure as $fs_key => $fs_value) {
+			// group head
+			$label_group=!empty($fs_value['label'])?'<div class="card-header">'.$fs_value['label'].'</div>':'';
+			$col_len=!empty($fs_value['col_len'])?$fs_value['col_len']:12;
+			$color=!empty($fs_value['color'])?$fs_value['color']:'primary';
 
-		// end of header content
-		$this->bricks_form['header_content_end'].='</div></form></div>';
+			$content.='<div class="col-12 col-md-'.$col_len.'"><div class="card card-'.$color.'">'.$label_group.'<div class="card-body">';
+
+			// forms in group
+			$ea_form='';
+			// check column
+			$last_group='';
+			foreach ($fs_value['data'] as $data_key => $data_value) {
+				$last_group=$data_key;
+					// ad col disini gan
+			}
+
+			// start build form
+			foreach ($fs_value['data'] as $data_key => $data_value) {
+				// preparation form
+				$label=!empty($data_value['label'])?$data_value['label']:'- No Label -';
+				$value=!empty($data_value['value'])?$data_value['value']:null;
+				$validation='';
+				if(!empty($data_value['validation'])){
+					foreach ($data_value['validation'] as $validation_val) {
+						$validation.=' '.$validation_val;
+					}
+				}
+				$warning_label=!empty($data_value['warning_label'])?'<div class="invalid-feedback">'.$data_value['warning_label'].'</div>':'';
+
+				// starting form
+				$ea_form.='<div class="form-group">';
+				// form core
+				$ea_form.='<label>'.$label.'</label>';
+				switch ($data_value['input']) {
+					case 'text':
+						$ea_form.='<input type="text" class="form-control" '.$validation.'>'.$warning_label;
+						break;
+					
+					default:
+						$ea_form.='<input type="text" class="form-control" disabled value="- Invalid or Unknown Input Type -">';
+						break;
+				}
+				// end form
+				$ea_form.='</div>';
+			}
+
+			$content.=$ea_form;
+			// end of group head
+			$content.='</div></div></div>';
+		}
+		$this->bricks_form['content']=$content;
+
+		// end of form
+		$this->bricks_form['form_end'].='</div></form>';
+		// end of section
+		$this->bricks_form['section_end'].='</div>';
 
 	}
 

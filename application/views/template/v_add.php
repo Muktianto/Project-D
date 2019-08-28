@@ -9,7 +9,6 @@
 </div>
 
 <div class="section-body">
-
   <form class="needs-validation" novalidate="">
     <div class="row">
 
@@ -19,16 +18,18 @@
             <h4>Group Name 1</h4>
           </div>
           <div class="card-body">
+            
             <div class="form-group">
-              <label>Your Name</label>
-              <input type="text" class="form-control" required="">
+              <label>Your Name CCCCC</label>
+              <input type="textarea" class="form-control" required>
               <div class="invalid-feedback">
                 What's your name?
               </div>
             </div>
+
             <div class="form-group mb-0">
               <label>Message</label>
-              <textarea class="form-control" required=""></textarea>
+              <textarea class="form-control"></textarea>
               <div class="invalid-feedback">
                 What do you wanna say?
               </div>
@@ -39,9 +40,9 @@
 
       <div class="col-12 col-md-6">
         <div class="card card-primary">
-          <div class="card-header">
+         <!--  <div class="card-header">
             <h4>Group Name 2</h4>
-          </div>
+          </div> -->
           <div class="card-body">
             <div class="form-group">
               <label>Your Name</label>
