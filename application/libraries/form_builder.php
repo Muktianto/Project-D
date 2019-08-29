@@ -39,6 +39,8 @@ class Form_builder
 
 	public $html='';
 
+
+
 	// made bricks and bricks_form to show the differences of them
 	public $bricks=array(
 		'breadcrum_bar'=>'',
@@ -66,74 +68,84 @@ class Form_builder
 			'label'=>'Group 1',
 			'color'=>'primary', // default primary
 			'col_len'=>6, // default 12
+			'col_total'=>1, // default null/1
 			'data'=>array(
-				'key_1'=>array(
-					'label'=>'Key 1',
-					'input'=>'text',
-					'value'=>'VALLLLLLLLLL',
-					'validation'=>array(),
-					'column'=>1,
-					'warning_label'=>'eh isi cuk',
-				),
-				'key_2'=>array(
-					'label'=>'Key 2',
-					'input'=>'textarea',
-					'value'=>null,
-					'validation'=>array(),
-					'column'=>1,
-					'warning_label'=>'ini juga',
+				'col_1'=>array(
+					'key_1'=>array(
+						'label'=>'Key 1',
+						'input'=>'text',
+						'value'=>'VALLLLLLLLLL',
+						'validation'=>array(),
+						'column'=>1,
+						'warning_label'=>'eh isi cuk',
+					),
+					'key_2'=>array(
+						'label'=>'Key 2',
+						'input'=>'textarea',
+						'value'=>null,
+						'validation'=>array(),
+						'column'=>1,
+						'warning_label'=>'ini juga',
+					),
 				),
 			),
 		),
-
 		'group_id_2'=>array(
 			// 'label'=>'Group 2',
 			'color'=>'success', // default primary
 			'col_len'=>5, // default 12
+			'col_total'=>1, // default null/1
 			'data'=>array(
-				'key_1'=>array(
-					'label'=>'Key 1',
-					'input'=>'text',
-					'value'=>null,
-					'validation'=>array('required',''),
-				),
-				'key_2'=>array(
-					'label'=>'Key 2',
-					'input'=>'textarea',
-					'value'=>null,
-					'validation'=>array(),
+				'col_1'=>array(
+					'key_1'=>array(
+						'label'=>'Key 1',
+						'input'=>'text',
+						'value'=>null,
+						'validation'=>array('required',''),
+					),
+					'key_2'=>array(
+						'label'=>'Key 2',
+						'input'=>'textarea',
+						'value'=>null,
+						'validation'=>array(),
+					),
 				),
 			),
 		),
 		'group_id_3'=>array(
 			'label'=>'Group 3',
 			'color'=>'danger', // default primary
+			'last_group'=>true, // default false
+			'col_total'=>2, // default null/1
+			'col_len_ea'=>6,//floor(12/2), // default null/1
 			'data'=>array(
-				'key_1'=>array(
+				'col_1'=>array(
+					'key_1'=>array(
 					// 'label'=>'Key 1',
-					'input'=>'text',
-					'value'=>null,
-					'validation'=>array('required',''),
+						'input'=>'text',
+						'value'=>null,
+						'validation'=>array('required',''),
+					),
+					'key_2'=>array(
+						'label'=>'Key 2',
+						'input'=>'textarea',
+						'value'=>null,
+						'validation'=>array(),
+					),
 				),
-				'key_2'=>array(
-					'label'=>'Key 2',
-					'input'=>'textarea',
-					'value'=>null,
-					'validation'=>array(),
-				),
-				'key_3'=>array(
-					'label'=>'Key 3',
-					'input'=>'text',
-					'value'=>null,
-					'column'=>2,
-					'validation'=>array('required',''),
-				),
-				'key_4'=>array(
-					'label'=>'Key 5',
-					'input'=>'textarea',
-					'column'=>2,
-					'value'=>null,
-					'validation'=>array(),
+				'col_2'=>array(
+					'key_3'=>array(
+						'label'=>'Key 3',
+						'input'=>'text',
+						'value'=>null,
+						'validation'=>array('required',''),
+					),
+					'key_4'=>array(
+						'label'=>'Key 5',
+						'input'=>'textarea',
+						'value'=>null,
+						'validation'=>array(),
+					),
 				),
 			),
 		),
@@ -356,7 +368,6 @@ class Form_builder
 	}
 
 	public function form($data=null){
-
 		// breadcrum bar
 		$this->bricks_form['breadcrum_bar'] .= $this->breadcrum('Create '.$this->module_name);
 		// header section
@@ -365,7 +376,7 @@ class Form_builder
 		$this->bricks_form['form'].=' <form class="needs-validation" novalidate=""><div class="row">';
 
 		// content
-		// debug($this->form_structure);
+		// debug($this->form_structure,false);
 		$content='';
 		foreach ($this->form_structure as $fs_key => $fs_value) {
 			// group head
@@ -373,18 +384,56 @@ class Form_builder
 			$col_len=!empty($fs_value['col_len'])?$fs_value['col_len']:12;
 			$color=!empty($fs_value['color'])?$fs_value['color']:'primary';
 
+			// group level
 			$content.='<div class="col-12 col-md-'.$col_len.'"><div class="card card-'.$color.'">'.$label_group.'<div class="card-body">';
 
-			// forms in group
 			$ea_form='';
-			// check column
-			$last_group='';
-			foreach ($fs_value['data'] as $data_key => $data_value) {
-				$last_group=$data_key;
-					// ad col disini gan
-			}
-
 			// start build form
+			debug($fs_value,false);
+			debug($fs_value['data'],false);
+
+			$col_row='';
+			$end_col_row='';
+
+			// distinguish which using rows or cols and simple forms, without rows and cols, empty =normal
+			if($fs_value['col_total']>1){
+				$col_row='<div class="row">';
+				$end_col_row='</div>';
+			}
+			$content.=$col_row;
+			$forms_field='';
+
+			foreach ($fs_value['data'] as $data_key => $data_value) {
+				debug($data_value);
+				$col_class='';
+				$end_col_class='';
+				// distinguish which using rows or cols and simple forms, without rows and cols 
+				// empty =normal
+				if(!$fs_value['col_total']>1){
+					$col_class='<div class="col-12 col-md-6">';
+					$end_col_class='</div>';
+				}
+				$forms_field.=$col_class;
+
+				foreach ($data_value as $data_form_key => $data_form_value) {
+					$label=!empty($data_form_value['label'])?$data_form_value['label']:'- No Label -';
+					$value=!empty($data_form_value['value'])?$data_form_value['value']:null;
+					$validation='';
+					if(!empty($data_form_value['validation'])){
+						foreach ($data_form_value['validation'] as $validation_val) {
+							$validation.=' '.$validation_val;
+						}
+					}
+					$warning_label_val=empty($data_form_value['warning_label'])?'Empty '.$data_form_value['label']:$data_form_value['warning_label'];
+					// kalau required CHEK VALIDATION
+					$warning_label=!empty($data_form_value['warning_label'])?'<div class="invalid-feedback">'.$data_form_value['warning_label'].'</div>':'';
+				}
+
+				$forms_field.=$end_col_class;
+			}
+			$content.=$forms_field.$end_col_row;
+
+				// NO USE -------------------------------------------------------------------------------------
 			foreach ($fs_value['data'] as $data_key => $data_value) {
 				// preparation form
 				$label=!empty($data_value['label'])?$data_value['label']:'- No Label -';
@@ -397,22 +446,25 @@ class Form_builder
 				}
 				$warning_label=!empty($data_value['warning_label'])?'<div class="invalid-feedback">'.$data_value['warning_label'].'</div>':'';
 
+				// check total column
+
 				// starting form
 				$ea_form.='<div class="form-group">';
 				// form core
 				$ea_form.='<label>'.$label.'</label>';
 				switch ($data_value['input']) {
 					case 'text':
-						$ea_form.='<input type="text" class="form-control" '.$validation.'>'.$warning_label;
-						break;
+					$ea_form.='<input type="text" class="form-control" '.$validation.'>'.$warning_label;
+					break;
 					
 					default:
-						$ea_form.='<input type="text" class="form-control" disabled value="- Invalid or Unknown Input Type -">';
-						break;
+					$ea_form.='<input type="text" class="form-control" disabled value="- Invalid or Unknown Input Type -">';
+					break;
 				}
 				// end form
 				$ea_form.='</div>';
 			}
+				// end of NO USE -------------------------------------------------------------------------------------
 
 			$content.=$ea_form;
 			// end of group head
