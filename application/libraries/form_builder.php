@@ -116,15 +116,16 @@ class Form_builder
 			'label'=>'Group 3',
 			'color'=>'danger', // default primary
 			'last_group'=>true, // default false
+			'col_len'=>10, // default 12
 			'col_total'=>2, // default null/1
-			'col_len_ea'=>6,//floor(12/2), // default null/1
+			'form_col_len_ea'=>6,//floor(12/2), // default null/1
 			'data'=>array(
 				'col_1'=>array(
 					'key_1'=>array(
 					// 'label'=>'Key 1',
 						'input'=>'text',
 						'value'=>null,
-						'validation'=>array('required',''),
+						'validation'=>array(''),
 					),
 					'key_2'=>array(
 						'label'=>'Key 2',
@@ -380,21 +381,21 @@ class Form_builder
 		$content='';
 		foreach ($this->form_structure as $fs_key => $fs_value) {
 			// group head
-			$label_group=!empty($fs_value['label'])?'<div class="card-header">'.$fs_value['label'].'</div>':'';
+			$label_group=!empty($fs_value['label'])?'<div class="card-header"><h4>'.$fs_value['label'].'</h4></div>':'';
 			$col_len=!empty($fs_value['col_len'])?$fs_value['col_len']:12;
 			$color=!empty($fs_value['color'])?$fs_value['color']:'primary';
 
 			// group level
 			$content.='<div class="col-12 col-md-'.$col_len.'"><div class="card card-'.$color.'">'.$label_group.'<div class="card-body">';
 
-			$ea_form='';
+			// $ea_form='';
 			// start build form
-			debug($fs_value,false);
-			debug($fs_value['data'],false);
+			// debug($fs_value,false);
+			// debug($fs_value['data'],false);
 
 			$col_row='';
 			$end_col_row='';
-
+// debug($fs_value);
 			// distinguish which using rows or cols and simple forms, without rows and cols, empty =normal
 			if($fs_value['col_total']>1){
 				$col_row='<div class="row">';
@@ -404,18 +405,19 @@ class Form_builder
 			$forms_field='';
 
 			foreach ($fs_value['data'] as $data_key => $data_value) {
-				debug($data_value);
+				// debug($data_value);
 				$col_class='';
 				$end_col_class='';
 				// distinguish which using rows or cols and simple forms, without rows and cols
 				// empty =normal
-				if(!$fs_value['col_total']>1){
-					$col_class='<div class="col-12 col-md-6">';
+				if($fs_value['col_total']>1){
+					$col_class='<div class="col-12 col-md-'.$fs_value['form_col_len_ea'].'">';
 					$end_col_class='</div>';
 				}
 				$forms_field.=$col_class;
 
 				foreach ($data_value as $data_form_key => $data_form_value) {
+					// debug($data_form_value);
 					$label=!empty($data_form_value['label'])?$data_form_value['label']:'- No Label -';
 					$value=!empty($data_form_value['value'])?$data_form_value['value']:null;
 					$validation='';
@@ -424,10 +426,28 @@ class Form_builder
 							$validation.=' '.$validation_val;
 						}
 					}
-					$warning_label_val=empty($data_form_value['warning_label'])?'Empty '.$data_form_value['label']:$data_form_value['warning_label'];
+					// $warning_label_val='coeg';
+					$warning_label_val=empty($data_form_value['warning_label'])?'Empty '.$label:$data_form_value['warning_label'];
 					// kalau required CHEK VALIDATION
-					$warning_label=!empty($data_form_value['warning_label'])?'<div class="invalid-feedback">'.$data_form_value['warning_label'].'</div>':'';
+					// $warning_label=!empty($data_form_value['warning_label'])?'<div class="invalid-feedback">'.$data_form_value['warning_label'].'</div>':'';
+					$warning_label='<div class="invalid-feedback">'.$warning_label_val.'</div>';
 
+					// starting form
+					$forms_field.='<div class="form-group">';
+				// form core
+					$forms_field.='<label>'.$label.'</label>';
+
+					switch ($data_form_value['input']) {
+						case 'text':
+						$forms_field.='<input type="text" class="form-control" '.$validation.'>'.$warning_label;
+						break;
+
+						default:
+						$forms_field.='<input type="text" class="form-control" disabled value="- Invalid or Unknown Input Type -">';
+						break;
+					}
+				// end form
+					$forms_field.='</div>';
 
 				}
 
@@ -435,40 +455,15 @@ class Form_builder
 			}
 			$content.=$forms_field.$end_col_row;
 
-				// NO USE -------------------------------------------------------------------------------------
-			foreach ($fs_value['data'] as $data_key => $data_value) {
-				// preparation form
-				$label=!empty($data_value['label'])?$data_value['label']:'- No Label -';
-				$value=!empty($data_value['value'])?$data_value['value']:null;
-				$validation='';
-				if(!empty($data_value['validation'])){
-					foreach ($data_value['validation'] as $validation_val) {
-						$validation.=' '.$validation_val;
-					}
-				}
-				$warning_label=!empty($data_value['warning_label'])?'<div class="invalid-feedback">'.$data_value['warning_label'].'</div>':'';
-
-				// check total column
-
-				// starting form
-				$ea_form.='<div class="form-group">';
-				// form core
-				$ea_form.='<label>'.$label.'</label>';
-				switch ($data_value['input']) {
-					case 'text':
-					$ea_form.='<input type="text" class="form-control" '.$validation.'>'.$warning_label;
-					break;
-
-					default:
-					$ea_form.='<input type="text" class="form-control" disabled value="- Invalid or Unknown Input Type -">';
-					break;
-				}
-				// end form
-				$ea_form.='</div>';
+			// debug($fs_value);
+			// button if last group
+			if(!empty($fs_value['last_group']) AND $fs_value['last_group']){
+				// site_url($this->module_page.'/create/')
+				$content.='<div class="card-footer text-right">
+				<a href="'. 'a' .'" class="btn btn-icon icon-left btn-secondary"><i class="fa fa-chevron-left"></i> Cancel</a>
+				<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>';
 			}
-				// end of NO USE -------------------------------------------------------------------------------------
 
-			$content.=$ea_form;
 			// end of group head
 			$content.='</div></div></div>';
 		}
