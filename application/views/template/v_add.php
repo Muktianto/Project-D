@@ -18,10 +18,10 @@
             <h4>Group Name 1</h4>
           </div>
           <div class="card-body">
-            
+
             <div class="form-group">
               <label>Your Name CCCCC</label>
-              <input type="textarea" class="form-control" required>
+              <input type="textarea" class="form-control" >
               <div class="invalid-feedback">
                 What's your name?
               </div>

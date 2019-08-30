@@ -1,7 +1,7 @@
-<?php 
+<?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Form_builder 
+class Form_builder
 {
 	public $attributes=array();
 
@@ -52,7 +52,7 @@ class Form_builder
 		'subcontent'=>'',
 		'header_content_end'=>'',
 	);
-	
+
 	public $bricks_form=array(
 		'breadcrum_bar'=>'',
 		'section'=>'',
@@ -233,7 +233,7 @@ class Form_builder
 		$this->data_map=$data_table;
 
 		$this->bricks['subcontent']=$subcontent;
-		
+
 		// debug($this->header_map);
 
 		if($auto_build_mapping){
@@ -280,7 +280,7 @@ class Form_builder
 		<div class="card  card-primary">
 		<div class="card-body">';
 
-		// card, sub content is placed inside this card 
+		// card, sub content is placed inside this card
 		$this->bricks['card'].='<div class="table-responsive">
 		<table class="table table-striped" id="table-2" style="white-space: nowrap">';
 
@@ -293,7 +293,7 @@ class Form_builder
 			<input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
 			<label for="checkbox-all" class="custom-control-label">&nbsp;</label>
 			</div>
-			</th>';	
+			</th>';
 		}
 
 		$this->bricks['table_header'].='<th style="display:none;">X</th><th style="display:none;">X</th><th style="display:none;">X</th><th style="display:none;">X</th>';  // BUG.. datatable wont sort 1,3,4 column
@@ -330,7 +330,7 @@ class Form_builder
 			}
 			$this->bricks['table_body'].='</tr>';
 		}
-		
+
 		// end of table body
 		$this->bricks['table_body'].=' </tbody>';
 
@@ -346,7 +346,7 @@ class Form_builder
 		return $this->bricks;
 	}
 
-	// main_build / build / build_form => opttional, either using diff fucntion or using main build + param, 
+	// main_build / build / build_form => opttional, either using diff fucntion or using main build + param,
 	public function main_build($datatable=true){
 		$the_bricks=$datatable ? $this->bricks : $this->bricks_form;
 		foreach ($the_bricks as $bricks_val) {
@@ -407,7 +407,7 @@ class Form_builder
 				debug($data_value);
 				$col_class='';
 				$end_col_class='';
-				// distinguish which using rows or cols and simple forms, without rows and cols 
+				// distinguish which using rows or cols and simple forms, without rows and cols
 				// empty =normal
 				if(!$fs_value['col_total']>1){
 					$col_class='<div class="col-12 col-md-6">';
@@ -427,6 +427,8 @@ class Form_builder
 					$warning_label_val=empty($data_form_value['warning_label'])?'Empty '.$data_form_value['label']:$data_form_value['warning_label'];
 					// kalau required CHEK VALIDATION
 					$warning_label=!empty($data_form_value['warning_label'])?'<div class="invalid-feedback">'.$data_form_value['warning_label'].'</div>':'';
+
+
 				}
 
 				$forms_field.=$end_col_class;
@@ -456,7 +458,7 @@ class Form_builder
 					case 'text':
 					$ea_form.='<input type="text" class="form-control" '.$validation.'>'.$warning_label;
 					break;
-					
+
 					default:
 					$ea_form.='<input type="text" class="form-control" disabled value="- Invalid or Unknown Input Type -">';
 					break;
