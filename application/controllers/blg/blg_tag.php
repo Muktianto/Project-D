@@ -20,14 +20,19 @@ class Blg_Tag extends CI_Controller {
     // rendering
     $this->load->view($this->form_builder->admin_temp, array(
         'data'=>$this->form_builder->build(),
-        // 'debug'=>'template/v_content',
     ));
 }
 
+public function add(){
+   debug($this->input->post());
+}
+
 public function create(){
+    // // preparing attributes
+    // $this->form_builder->dev_structure($this->tag->attributes);
+    
     // processing
-    // $this->form_builder->mapping($this->tag->attributes, $data_table);
-    $this->form_builder->form();
+    $this->form_builder->form($this->tag->attributes);
     // rendering
     $this->load->view($this->form_builder->admin_temp, array(
         'data'=>$this->form_builder->build_form(),

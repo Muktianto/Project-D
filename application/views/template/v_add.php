@@ -9,7 +9,8 @@
 </div>
 
 <div class="section-body">
-  <form class="needs-validation" novalidate="">
+  <!-- <form class="needs-validation" novalidate=""> -->
+    <form action="<?php base_url('admin/product/add') ?>" method="post" enctype="multipart/form-data" class="needs-validation" novalidate="">
     <div class="row">
 
       <div class="col-12 col-md-6">

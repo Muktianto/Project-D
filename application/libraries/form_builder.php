@@ -71,7 +71,7 @@ class Form_builder
 			'col_total'=>1, // default null/1
 			'data'=>array(
 				'col_1'=>array(
-					'key_1'=>array(
+					'A_key_1'=>array(
 						'label'=>'Key 1',
 						'input'=>'text',
 						'value'=>'VALLLLLLLLLL',
@@ -79,7 +79,7 @@ class Form_builder
 						'column'=>1,
 						'warning_label'=>'eh isi cuk',
 					),
-					'key_2'=>array(
+					'A_key_2'=>array(
 						'label'=>'Key 2',
 						'input'=>'textarea',
 						'value'=>null,
@@ -97,13 +97,13 @@ class Form_builder
 			'col_total'=>1, // default null/1
 			'data'=>array(
 				'col_1'=>array(
-					'key_1'=>array(
+					'B_key_1'=>array(
 						'label'=>'Key 1',
 						'input'=>'text',
 						'value'=>null,
 						'validation'=>array('required',''),
 					),
-					'key_2'=>array(
+					'B_key_2'=>array(
 						'label'=>'Key 2',
 						'input'=>'textarea',
 						'value'=>null,
@@ -121,13 +121,13 @@ class Form_builder
 			'form_col_len_ea'=>6,//floor(12/2), // default null/1
 			'data'=>array(
 				'col_1'=>array(
-					'key_1'=>array(
+					'C_key_1'=>array(
 					// 'label'=>'Key 1',
 						'input'=>'text',
 						'value'=>null,
 						'validation'=>array(''),
 					),
-					'key_2'=>array(
+					'C_key_2'=>array(
 						'label'=>'Key 2',
 						'input'=>'textarea',
 						'value'=>null,
@@ -135,13 +135,13 @@ class Form_builder
 					),
 				),
 				'col_2'=>array(
-					'key_3'=>array(
+					'C_key_3'=>array(
 						'label'=>'Key 3',
 						'input'=>'text',
 						'value'=>null,
 						'validation'=>array('required',''),
 					),
-					'key_4'=>array(
+					'C_key_4'=>array(
 						'label'=>'Key 5',
 						'input'=>'textarea',
 						'value'=>null,
@@ -368,13 +368,25 @@ class Form_builder
 		return $this->main_build(false);
 	}
 
-	public function form($data=null){
+	public function develop_form_structure($attributes){
+
+	}
+
+	public function form($attributes=null, $data=null){
+		debug($this->form_structure);
+
+		// developing structure
+		if(!empty($attributes)){
+			$this->develop_form_structure($attributes);
+		}
+
 		// breadcrum bar
 		$this->bricks_form['breadcrum_bar'] .= $this->breadcrum('Create '.$this->module_name);
 		// header section
 		$this->bricks_form['section'].='<div class="section-body">';
 		// header form
-		$this->bricks_form['form'].=' <form class="needs-validation" novalidate=""><div class="row">';
+		// $this->bricks_form['form'].=' <form class="needs-validation" novalidate=""><div class="row">';
+		$this->bricks_form['form'].=' <form action="'.base_url('blg/blg_tag/add').'" method="post" enctype="multipart/form-data" class="needs-validation" novalidate=""><div class="row">';
 
 		// content
 		// debug($this->form_structure,false);
@@ -417,6 +429,7 @@ class Form_builder
 				$forms_field.=$col_class;
 
 				foreach ($data_value as $data_form_key => $data_form_value) {
+					// debug($data_form_key,false);
 					// debug($data_form_value);
 					$label=!empty($data_form_value['label'])?$data_form_value['label']:'- No Label -';
 					$value=!empty($data_form_value['value'])?$data_form_value['value']:null;
@@ -439,7 +452,7 @@ class Form_builder
 
 					switch ($data_form_value['input']) {
 						case 'text':
-						$forms_field.='<input type="text" class="form-control" '.$validation.'>'.$warning_label;
+						$forms_field.='<input type="text" name="'.$data_form_key.'" class="form-control" '.$validation.'>'.$warning_label;
 						break;
 
 						default:

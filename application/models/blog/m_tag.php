@@ -85,6 +85,7 @@ class M_tag extends CI_Model {
 		$this->tag_name=$post['tag_name'];
 
 		$this->db->insert($this->table,$this);
+		
 	}
 
 	public function update(){
