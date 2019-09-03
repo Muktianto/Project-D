@@ -390,9 +390,11 @@ class Form_builder
 		$group = array();
 		foreach ($attributes as $att_key => $att_value) {
 			if (!array_key_exists('show_form', $att_value) or $att_value['show_form']) {
+				debug($att_value, false);
 				// if(!array_key_exists())
 			}
 		}
+		debug();
 	}
 
 	public function form($attributes = null, $data = null)

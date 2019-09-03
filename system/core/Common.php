@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CodeIgniter
  *
@@ -53,7 +54,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 // -------------------------------- IGNITED: DEFINE CUSTOM GLOBAL FUNCTION ------------------------------------
 
-function debug($data, $exit = true, $simple = '')
+function debug($data = '', $exit = true, $simple = '')
 {
 	// if (empty($data) && $exit){
 	// 	echo 'Data is empty';
@@ -127,7 +128,7 @@ if (!function_exists('is_php')) {
 	function is_php($version)
 	{
 		static $_is_php;
-		$version = (string)$version;
+		$version = (string) $version;
 
 		if (!isset($_is_php[$version])) {
 			$_is_php[$version] = version_compare(PHP_VERSION, $version, '>=');
@@ -512,7 +513,7 @@ if (!function_exists('set_status_header')) {
 		}
 
 		if (empty($text)) {
-			is_int($code) or $code = (int)$code;
+			is_int($code) or $code = (int) $code;
 			$stati = array(
 				100	=> 'Continue',
 				101	=> 'Switching Protocols',
@@ -784,7 +785,7 @@ if (!function_exists('_stringify_attributes')) {
 			return ' ' . $attributes;
 		}
 
-		$attributes = (array)$attributes;
+		$attributes = (array) $attributes;
 
 		foreach ($attributes as $key => $val) {
 			$atts .= ($js) ? $key . '=' . $val . ',' : ' ' . $key . '="' . $val . '"';
