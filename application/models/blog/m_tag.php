@@ -15,67 +15,40 @@ class M_tag extends CI_Model
 				'input' => 'hidden',
 				'primary_key' => true,
 				'label' => 'Tag ID',
-				'display' => true,
 				'align' => 'right',
+				'show_datatable' => true,
 			),
 			'tag_name' => array(
 				'input' => 'text',
 				'label' => 'Tag Name',
 				'validation' => 'required',
+				'show_datatable' => true,
 				// 'sortable'=> true,
-				'display' => true,
 			),
-			// 'dummy_1'=>array(
-			// 	'input'=>'text',
-			// 	'label'=>'dummy_1 Name',
-			// 	'validation'=>'required',
-			// 	// 'sortable'=> true,
-			// 	'display'=>true,
-			// 	'group'=>2,
-			// ),
-			// 'dummy_2'=>array(
-			// 	'input'=>'text',
-			// 	'label'=>'dummy_2 Name',
-			// 	'validation'=>'required',
-			// 	// 'sortable'=> true,
-			// 	'display'=>true,
-			// 	'group'=>2,
-			// ),
-			// 'dummy_3'=>array(
-			// 	'input'=>'text',
-			// 	'label'=>'dummy_3 Name',
-			// 	'validation'=>'required',
-			// 	// 'sortable'=> true,
-			// 	'display'=>true,
-			// 	'group'=>3,
-			// ),
-			// 'dummy_4'=>array(
-			// 	'input'=>'text',
-			// 	'label'=>'dummy_3 Name',
-			// 	'validation'=>'required',
-			// 	// 'sortable'=> true,
-			// 	'display'=>true,
-			// 	'group'=>3,
-			// ),
 			CREATE_BY => array(
 				'value' => $this->data->get_session('user_id'),
+				'show_form' => false,
 			),
 			CREATE_DATE => array(
 				'value' => date('Y-m-d H:i:s'),
+				'show_form' => false,
 			),
 			UPDATE_BY => array(
 				'value' => $this->data->get_session('user_id'),
+				'show_form' => false,
 			),
 			UPDATE_DATE => array(
 				'value' => date('Y-m-d H:i:s'),
+				'show_form' => false,
 			),
 		);
 	}
 
-	public function get_all()
+	public function get_data()
 	{
 		// debug($this->data->get_session());
-		return $this->db->get($this->table)->result_array();
+		return $this->db->select('tag_id,tag_name')
+			->get($this->table)->result_array();
 	}
 
 	public function get_by_id($id)

@@ -17,18 +17,13 @@ class Blg_Tag extends CI_Controller
     public function index()
     {
         // preparing
-        $data_table = $this->tag->get_all();
+        $data_table = $this->tag->get_data();
         // processing
         $this->form_builder->mapping($this->tag->attributes, $data_table);
         // rendering
         $this->load->view($this->form_builder->admin_temp, array(
             'data' => $this->form_builder->build(),
         ));
-    }
-
-    public function add()
-    {
-        debug($this->input->post());
     }
 
     public function create()

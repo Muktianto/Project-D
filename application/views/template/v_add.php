@@ -43,8 +43,8 @@
       <div class="col-12 col-md-6">
         <div class="card card-primary">
           <!--  <div class="card-header">
-            <h4>Group Name 2</h4>
-          </div> -->
+<h4>Group Name 2</h4>
+</div> -->
           <div class="card-body">
             <div class="form-group">
               <label>Your Name</label>

@@ -62,7 +62,10 @@ class Form_builder
 		'section_end' => '',
 	);
 
-	// map prediction
+
+
+	// map structure prediction
+	public $group = array();
 	public $form_structure = array(
 		'group_id_1' => array(
 			'label' => 'Group 1',
@@ -155,7 +158,7 @@ class Form_builder
 	public function init($model, $controller_id, $uri_string)
 	{
 		$this->module_page = $uri_string;
-		$this->module_name = 'Tag';
+		$this->module_name = '-MODNAME-';
 		$this->starter = array(
 			'start' => microtime(true),
 			'title' => $this->module_name,
@@ -173,8 +176,14 @@ class Form_builder
 		$this->data_map = $data_table;
 		// table header
 		foreach ($attributes as $model_key => $model_value) {
-			if (array_key_exists('display', $model_value) and $model_value['display']) {
+			// if (!array_key_exists('display', $model_value) or $model_value['display']) {
+			if (array_key_exists('show_datatable', $model_value) and $model_value['show_datatable']) {
 				$this->header_map[$model_key] = $model_value;
+				// }
+				// $this->header_map[$model_key] = $model_value;
+
+
+
 				// $this->header_map[$model_key]=array(
 				// 	// 'data'=>$model_key,
 				// 	'label'=>$model_value['label'],
@@ -203,14 +212,17 @@ class Form_builder
 		// end of action column location
 		// end of table header
 
+		// 	debug($attributes, false);
+		// 	debug($this->data_map, false);
+		// debug($this->header_map);
 
 		// list data
 		foreach ($data_table as $data_key => $data_value) {
 			$this->current_primary_key_str = '';
-			unset($data_table[$data_key][CREATE_BY]);
-			unset($data_table[$data_key][CREATE_DATE]);
-			unset($data_table[$data_key][UPDATE_BY]);
-			unset($data_table[$data_key][UPDATE_DATE]);
+			// unset($data_table[$data_key][CREATE_BY]);
+			// unset($data_table[$data_key][CREATE_DATE]);
+			// unset($data_table[$data_key][UPDATE_BY]);
+			// unset($data_table[$data_key][UPDATE_DATE]);
 
 			foreach ($this->primary_key as $pk_key) {
 				// $this->current_primary_key[$pk_key]=$data_value[$pk_key];
@@ -326,7 +338,6 @@ class Form_builder
 			}
 
 			$this->bricks['table_body'] .= '<td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td><td style="display:none;"></td>'; // BUG.. datatable wont sort 1,3,4 column
-
 			foreach ($this->header_map as $header_key => $header_val) {
 				// DEBUG
 				$align = !empty($header_val['align']) ? ' align="' . $header_val['align'] . '"' : '';
@@ -375,10 +386,18 @@ class Form_builder
 	}
 
 	public function develop_form_structure($attributes)
-	{ }
+	{
+		$group = array();
+		foreach ($attributes as $att_key => $att_value) {
+			if (!array_key_exists('show_form', $att_value) or $att_value['show_form']) {
+				// if(!array_key_exists())
+			}
+		}
+	}
 
 	public function form($attributes = null, $data = null)
 	{
+		debug($attributes, false);
 		debug($this->form_structure);
 
 		// developing structure
@@ -478,7 +497,7 @@ class Form_builder
 			if (!empty($fs_value['last_group']) and $fs_value['last_group']) {
 				// site_url($this->module_page.'/create/')
 				$content .= '<div class="card-footer text-right">
-				<a href="' . 'a' . '" class="btn btn-icon icon-left btn-secondary"><i class="fa fa-chevron-left"></i> Cancel</a>
+				<a href="' . 'back_page' . '" class="btn btn-icon icon-left btn-secondary"><i class="fa fa-chevron-left"></i> Cancel</a>
 				<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>';
 			}
 
