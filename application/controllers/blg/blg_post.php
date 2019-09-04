@@ -12,6 +12,20 @@ class Blg_Post extends CI_Controller
         $this->load->library('form_builder');
 
         $this->form_builder->init('post', 'blg_post', $this->uri->uri_string);
+
+        // optional group
+        $this->form_builder->form_structure = array(
+            1 => array(
+                'label' => 'Group 1',
+                'color' => 'danger',
+                // 'col_len'=>'12',
+            ),
+            2 => array(
+                'label' => 'Group 2',
+                'color' => 'info',
+                // 'col_len'=>'12',
+            ),
+        );
     }
 
     public function index()

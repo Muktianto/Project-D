@@ -387,10 +387,10 @@ class Form_builder
 
 	public function develop_form_structure($attributes)
 	{
-		$group = array();
 		foreach ($attributes as $att_key => $att_value) {
 			if (!array_key_exists('show_form', $att_value) or $att_value['show_form']) {
-				debug($att_value, false);
+				$this->form_structure
+				debug($att_value);
 				// if(!array_key_exists())
 			}
 		}
@@ -400,7 +400,8 @@ class Form_builder
 	public function form($attributes = null, $data = null)
 	{
 		debug($attributes, false);
-		debug($this->form_structure);
+		debug($this->group, false);
+		debug($this->form_structure, false);
 
 		// developing structure
 		if (!empty($attributes)) {
