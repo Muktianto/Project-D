@@ -389,6 +389,7 @@ class Form_builder
 	{
 		foreach ($attributes as $att_key => $att_value) {
 			if (!array_key_exists('show_form', $att_value) or $att_value['show_form']) {
+				if(!empty)
 				$this->form_structure
 				debug($att_value);
 				// if(!array_key_exists())
