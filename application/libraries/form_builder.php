@@ -66,7 +66,8 @@ class Form_builder
 
 	// map structure prediction
 	public $group = array();
-	public $form_structure = array(
+	public $form_structure = array();
+	public $form_structure2 = array(
 		'group_id_1' => array(
 			'label' => 'Group 1',
 			'color' => 'primary', // default primary
@@ -387,22 +388,43 @@ class Form_builder
 
 	public function develop_form_structure($attributes)
 	{
+		$column_count = array();
 		foreach ($attributes as $att_key => $att_value) {
 			if (!array_key_exists('show_form', $att_value) or $att_value['show_form']) {
-				if(!empty)
-				$this->form_structure
-				debug($att_value);
-				// if(!array_key_exists())
+				$data_group = !empty($att_value['group']) ? $att_value['group'] : 1;
+				$data_column = !empty($att_value['column']) ? $att_value['column'] : 1;
+
+				$label = !empty($att_value['label']) ? $att_value['label'] : $att_key;
+				$validation = !empty($att_value['validation']) ? $att_value['validation'] : array();
+				$this->form_structure[$data_group]['data'][$data_column][] = array(
+					'label' => $label,
+					'input' => !empty($att_value['input']) ? $att_value['input'] : null,
+					'value' => !empty($att_value['input']) ? $att_value['input'] : null,
+					'validation' => $validation,
+					'warning_label' => !in_array('required', $validation) ? null : (!empty($att_value['warning_label']) ? $att_value['warning_label'] : "Empty $label!"),
+				);
+
+				$column_count[$data_group][$data_column] = empty($column_count[$data_group][$data_column]) ? 1 : $column_count[$data_group][$data_column] + 1;
 			}
 		}
-		debug();
+
+		// mark the last group for placing action button
+		$count_group = count($this->form_structure);
+		$no_group = 1;
+		foreach ($this->form_structure as $token_key => $token_val) {
+			if ($no_group == $count_group) {
+				$this->form_structure[$token_key]['last_group'] = true;
+			}
+			$no_group++;
+		}
+
+		debug($this->form_structure);
 	}
 
 	public function form($attributes = null, $data = null)
 	{
-		debug($attributes, false);
-		debug($this->group, false);
-		debug($this->form_structure, false);
+		// debug($attributes, false);
+		// debug($this->form_structure, false);
 
 		// developing structure
 		if (!empty($attributes)) {
@@ -438,7 +460,7 @@ class Form_builder
 			$end_col_row = '';
 			// debug($fs_value);
 			// distinguish which using rows or cols and simple forms, without rows and cols, empty =normal
-			if ($fs_value['col_total'] > 1) {
+			if (!empty($fs_value['col_total']) and $fs_value['col_total'] > 1) {
 				$col_row = '<div class="row">';
 				$end_col_row = '</div>';
 			}
@@ -451,7 +473,7 @@ class Form_builder
 				$end_col_class = '';
 				// distinguish which using rows or cols and simple forms, without rows and cols
 				// empty =normal
-				if ($fs_value['col_total'] > 1) {
+				if (!empty($fs_value['col_total']) and $fs_value['col_total'] > 1) {
 					$col_class = '<div class="col-12 col-md-' . $fs_value['form_col_len_ea'] . '">';
 					$end_col_class = '</div>';
 				}
@@ -477,15 +499,16 @@ class Form_builder
 					// starting form
 					$forms_field .= '<div class="form-group">';
 					// form core
-					$forms_field .= '<label>' . $label . '</label>';
-
 					switch ($data_form_value['input']) {
+						case 'hidden':
+							$forms_field .= '<input type="hidden" name="' . $data_form_key . '" class="form-control">';
+							break;
 						case 'text':
-							$forms_field .= '<input type="text" name="' . $data_form_key . '" class="form-control" ' . $validation . '>' . $warning_label;
+							$forms_field .= '<label>' . $label . '</label><input type="text" name="' . $data_form_key . '" class="form-control" ' . $validation . '>' . $warning_label;
 							break;
 
 						default:
-							$forms_field .= '<input type="text" class="form-control" disabled value="- Invalid or Unknown Input Type -">';
+							$forms_field .= '<label>' . $label . '</label><input type="text" class="form-control" disabled value="- Invalid or Unknown Input Type -">';
 							break;
 					}
 					// end form

@@ -24,7 +24,7 @@ class M_post extends CI_Model
             'title' => array(
                 'input' => 'text',
                 'label' => 'Title',
-                'validation' => 'required',
+                'validation' => array('required'),
                 'show_datatable' => true,
                 'group' => 1,
                 'column' => 1,
@@ -45,21 +45,21 @@ class M_post extends CI_Model
             'comment' => array(
                 'input' => 'text',
                 'label' => 'comment',
-                'validation' => 'currency',
+                'validation' => array('currency'),
                 'show_datatable' => true,
                 'group' => 2,
             ),
             'views' => array(
                 'input' => 'text',
                 'label' => 'views',
-                'validation' => 'currency',
+                'validation' => array('currency'),
                 'show_datatable' => true,
                 'group' => 2,
             ),
             'shared' => array(
                 'input' => 'text',
                 'label' => 'shared',
-                'validation' => 'currency',
+                'validation' => array('currency'),
                 'group' => 2,
             ),
             'star_vote_average' => array(

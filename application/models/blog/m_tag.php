@@ -21,7 +21,7 @@ class M_tag extends CI_Model
 			'tag_name' => array(
 				'input' => 'text',
 				'label' => 'Tag Name',
-				'validation' => 'required',
+				'validation' => array('required'),
 				'show_datatable' => true,
 				// 'sortable'=> true,
 			),
