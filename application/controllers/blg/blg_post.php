@@ -47,8 +47,9 @@ class Blg_Post extends CI_Controller
 
     public function create()
     {
-        if (!empty($this->input->post()))
-            $this->post->save($this->input->post());
+        $post = $this->input->post();
+        if (!empty($post))
+            $this->post->save($post);
         // preparing & processing
         $this->form_builder->form($this->post->attributes);
         // rendering

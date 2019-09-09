@@ -54,8 +54,24 @@ class M_tag extends CI_Model
 
 	public function save($data)
 	{
-		debug(save_array($this->attributes, $data));
 		$this->db->insert($this->table, save_array($this->attributes, $data));
+		if ($this->db->affected_rows() > 0) {
+			$notif = array(
+				'title' => 'Yay!',
+				'message' => $this->db->affected_rows() . ' Record Saved',
+				'status' => 'success',
+			);
+		} else {
+			$notif = array(
+				'title' => 'Meh..',
+				'message' => 'Saving Failed',
+				'status' => 'error',
+			);
+		}
+
+		// $response = array($notif);
+
+		$this->session->set_flashdata(array($notif));
 	}
 
 	public function get_by_id($id)

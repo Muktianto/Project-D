@@ -25,13 +25,16 @@ class Blg_Tag extends CI_Controller
         // rendering
         $this->load->view($this->form_builder->admin_temp, array(
             'data' => $this->form_builder->build(),
+            'flash_data' => $this->session->flashdata(),
+            // 'flash_data' => 'x',
         ));
     }
 
     public function create()
     {
-        if (!empty($this->input->post()))
-            $this->tag->save($this->input->post());
+        $post = $this->input->post();
+        if (!empty($post))
+            $this->tag->save($post);
 
         // preparing & processing
         $this->form_builder->form($this->tag->attributes);
@@ -40,9 +43,6 @@ class Blg_Tag extends CI_Controller
             'data' => $this->form_builder->build_form(),
         ));
     }
-
-    public function save($type)
-    { }
 
     public function create_debug()
     {
@@ -94,6 +94,21 @@ class Blg_Tag extends CI_Controller
             'role' =>  '$this->get_user_role($user_data->user_id)'
         );
         $this->session->set_userdata($user_session);
+
+        $notif = array(
+            'a' => array(
+                'title' => 'Meh..',
+                'message' => 'Saving Failed',
+                'status' => 'error',
+            ),
+            'b' => array(
+                'title' => 'Meh..',
+                'message' => 'Saving Failed',
+                'status' => 'error',
+            ),
+        );
+        $this->session->set_flashdata($notif);
+
         echo 'login';
     }
 
@@ -110,6 +125,8 @@ class Blg_Tag extends CI_Controller
         $this->session->unset_userdata('image');
         $this->session->unset_userdata('role');
         // $this->index();
+        $x = $this->session->flashdata();
+        debug($x);
         echo 'logout';
     }
     // -------------------------- end of TEST 
