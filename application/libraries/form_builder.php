@@ -39,8 +39,6 @@ class Form_builder
 
 	public $html = '';
 
-
-
 	// made bricks and bricks_form to show the differences of them
 	public $bricks = array(
 		'breadcrum_bar' => '',
@@ -176,29 +174,17 @@ class Form_builder
 	{
 		$this->data_map = $data_table;
 		// table header
+		// map fields to show in datatable
 		foreach ($attributes as $model_key => $model_value) {
-			// if (!array_key_exists('display', $model_value) or $model_value['display']) {
 			if (array_key_exists('show_datatable', $model_value) and $model_value['show_datatable']) {
 				$this->header_map[$model_key] = $model_value;
-				// }
-				// $this->header_map[$model_key] = $model_value;
-
-
-
-				// $this->header_map[$model_key]=array(
-				// 	// 'data'=>$model_key,
-				// 	'label'=>$model_value['label'],
-
-				// 	// 'sortable'=>array_key_exists('sortable', $model_value)? $model_value['sortable'] : false,
-				// 	// 'alias'=>''
-				// );
 			}
 			if (array_key_exists('primary_key', $model_value) and $model_value['primary_key']) {
 				$this->primary_key[] = $model_key;
 			}
 		}
 
-		// action column location
+		// action column location, first column or last
 		$action_col = array(
 			'data' => $this->primary_key,
 			'label' => 'Action',
@@ -213,28 +199,17 @@ class Form_builder
 		// end of action column location
 		// end of table header
 
-		// 	debug($attributes, false);
-		// 	debug($this->data_map, false);
-		// debug($this->header_map);
-
 		// list data
 		foreach ($data_table as $data_key => $data_value) {
+			// prepare PK to build action button
 			$this->current_primary_key_str = '';
-			// unset($data_table[$data_key][CREATE_BY]);
-			// unset($data_table[$data_key][CREATE_DATE]);
-			// unset($data_table[$data_key][UPDATE_BY]);
-			// unset($data_table[$data_key][UPDATE_DATE]);
-
 			foreach ($this->primary_key as $pk_key) {
-				// $this->current_primary_key[$pk_key]=$data_value[$pk_key];
 				$this->current_primary_key_str .= empty($this->current_primary_key_str) ? $data_value[$pk_key] : '|' . $data_value[$pk_key];
 			}
 
-			// $data_table[$data_key]['action']='<a href="#" class="btn btn-secondary btn-sm btn-info">Detail</a>';
-			// $data_table[$data_key]['action']=$this->update_link().' '.$this->delete_link();
 			$action_buttons = $this->update_link() . $this->delete_link();
-			// $data_table[$data_key]['action']=$this->update_link().$this->delete_link();
 
+			// action column location, first column or last
 			if ($this->config['front_action']) {
 				$header_map_token['action'] = $action_buttons;
 				$data_table[$data_key] = array_merge($header_map_token, $data_table[$data_key]);
@@ -242,13 +217,11 @@ class Form_builder
 				$data_table[$data_key]['action'] = $action_buttons;
 			}
 		}
-
 		$this->data_map = $data_table;
 
 		$this->bricks['subcontent'] = $subcontent;
 
-		// debug($this->header_map);
-
+		// build datatable
 		if ($auto_build_mapping) {
 			$this->datatable();
 		}
@@ -260,8 +233,6 @@ class Form_builder
 	{
 		$key = empty($key) ? $this->current_primary_key_str : $key;
 		return ' <a href="' . site_url($this->module_page . '/update/') . encode('UPD|' . $key) . '" class="btn btn-sm btn-icon icon-' . $icon_loc . ' btn-outline-' . $color . '"><i class="fas fa-' . $icon . '"></i> ' . $label . '</a>';
-
-		// return '<a href="'.site_url('admin/module/view') . '/' . '$isi[]' .'" class="label label-'.$color.'" data-placement="left" data-toggle="tooltip" title="'.$label.'">ssssssssss<span class="fa fa-'.$icon.'"></span></a>';
 	}
 
 	public function delete_link($key = '')
@@ -287,7 +258,6 @@ class Form_builder
 	{
 		// breadcrum bar
 		$add_button = '&nbsp&nbsp&nbsp<a href="' .  site_url($this->module_page . '/create/') . '" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus" style="font-size: smaller;"></i> Create</a>';
-
 		$this->bricks['breadcrum_bar'] .= $this->breadcrum($this->module_name, $add_button);
 
 		// header content
@@ -358,7 +328,6 @@ class Form_builder
 		// end of header content
 		$this->bricks['header_content_end'] .= '</div></div></div></div></div>';
 
-
 		return $this->bricks;
 	}
 
@@ -372,7 +341,7 @@ class Form_builder
 		return array(
 			'content' => $this->html,
 			'title' => $this->starter['title'],
-			'start' => $this->starter['start'],
+			'start' => $this->starter['start'], // elapsed time
 		);
 	}
 
@@ -396,7 +365,7 @@ class Form_builder
 
 				$label = !empty($att_value['label']) ? $att_value['label'] : $att_key;
 				$validation = !empty($att_value['validation']) ? $att_value['validation'] : array();
-				$this->form_structure[$data_group]['data'][$data_column][] = array(
+				$this->form_structure[$data_group]['data'][$data_column][$att_key] = array(
 					'label' => $label,
 					'input' => !empty($att_value['input']) ? $att_value['input'] : null,
 					'value' => !empty($att_value['input']) ? $att_value['input'] : null,
@@ -418,15 +387,17 @@ class Form_builder
 			$no_group++;
 		}
 
-		debug($this->form_structure);
+		// add column information total column and col len
+		foreach ($column_count as $col_key => $col_value) {
+			$this->form_structure[$col_key]['col_total'] = count($col_value);
+			$this->form_structure[$col_key]['form_col_len_ea'] = floor(12 / count($col_value));
+		}
 	}
 
 	public function form($attributes = null, $data = null)
 	{
-		// debug($attributes, false);
-		// debug($this->form_structure, false);
-
 		// developing structure
+		// empty attributes means u should prepare $this->form_structure by urself
 		if (!empty($attributes)) {
 			$this->develop_form_structure($attributes);
 		}
@@ -436,14 +407,12 @@ class Form_builder
 		// header section
 		$this->bricks_form['section'] .= '<div class="section-body">';
 		// header form
-		// $this->bricks_form['form'].=' <form class="needs-validation" novalidate=""><div class="row">';
-		$this->bricks_form['form'] .= ' <form action="' . base_url('blg/blg_tag/add') . '" method="post" enctype="multipart/form-data" class="needs-validation" novalidate=""><div class="row">';
+		$this->bricks_form['form'] .= ' <form action="' . base_url($this->module_page . 'create') . '" method="post" enctype="multipart/form-data" class="needs-validation" novalidate=""><div class="row">';
 
 		// content
-		// debug($this->form_structure,false);
 		$content = '';
+		// group head level
 		foreach ($this->form_structure as $fs_key => $fs_value) {
-			// group head
 			$label_group = !empty($fs_value['label']) ? '<div class="card-header"><h4>' . $fs_value['label'] . '</h4></div>' : '';
 			$col_len = !empty($fs_value['col_len']) ? $fs_value['col_len'] : 12;
 			$color = !empty($fs_value['color']) ? $fs_value['color'] : 'primary';
@@ -451,14 +420,8 @@ class Form_builder
 			// group level
 			$content .= '<div class="col-12 col-md-' . $col_len . '"><div class="card card-' . $color . '">' . $label_group . '<div class="card-body">';
 
-			// $ea_form='';
-			// start build form
-			// debug($fs_value,false);
-			// debug($fs_value['data'],false);
-
 			$col_row = '';
 			$end_col_row = '';
-			// debug($fs_value);
 			// distinguish which using rows or cols and simple forms, without rows and cols, empty =normal
 			if (!empty($fs_value['col_total']) and $fs_value['col_total'] > 1) {
 				$col_row = '<div class="row">';
@@ -467,8 +430,8 @@ class Form_builder
 			$content .= $col_row;
 			$forms_field = '';
 
+			// column level
 			foreach ($fs_value['data'] as $data_key => $data_value) {
-				// debug($data_value);
 				$col_class = '';
 				$end_col_class = '';
 				// distinguish which using rows or cols and simple forms, without rows and cols
@@ -479,9 +442,8 @@ class Form_builder
 				}
 				$forms_field .= $col_class;
 
+				// form level
 				foreach ($data_value as $data_form_key => $data_form_value) {
-					// debug($data_form_key,false);
-					// debug($data_form_value);
 					$label = !empty($data_form_value['label']) ? $data_form_value['label'] : '- No Label -';
 					$value = !empty($data_form_value['value']) ? $data_form_value['value'] : null;
 					$validation = '';
@@ -490,14 +452,14 @@ class Form_builder
 							$validation .= ' ' . $validation_val;
 						}
 					}
-					// $warning_label_val='coeg';
-					$warning_label_val = empty($data_form_value['warning_label']) ? 'Empty ' . $label : $data_form_value['warning_label'];
-					// kalau required CHEK VALIDATION
-					// $warning_label=!empty($data_form_value['warning_label'])?'<div class="invalid-feedback">'.$data_form_value['warning_label'].'</div>':'';
-					$warning_label = '<div class="invalid-feedback">' . $warning_label_val . '</div>';
+					//OLD delete after make sure it was unnecessary
+					// $warning_label_val = empty($data_form_value['warning_label']) ? 'Empty ' . $label : $data_form_value['warning_label'];
+					// $warning_label = '<div class="invalid-feedback">' . $warning_label_val . '</div>';
+					$warning_label = empty($data_form_value['warning_label']) ? null : '<div class="invalid-feedback">' . $data_form_value['warning_label'] . '</div>';
 
 					// starting form
-					$forms_field .= '<div class="form-group">';
+					// hidden doesnt need form tag, it would give it a little blank space
+					$forms_field .= $data_form_value['input'] == 'hidden' ? '' : '<div class="form-group">';
 					// form core
 					switch ($data_form_value['input']) {
 						case 'hidden':
@@ -512,14 +474,13 @@ class Form_builder
 							break;
 					}
 					// end form
-					$forms_field .= '</div>';
+					$forms_field .= $data_form_value['input'] == 'hidden' ? '' : '</div>';
 				}
 
 				$forms_field .= $end_col_class;
 			}
 			$content .= $forms_field . $end_col_row;
 
-			// debug($fs_value);
 			// button if last group
 			if (!empty($fs_value['last_group']) and $fs_value['last_group']) {
 				// site_url($this->module_page.'/create/')

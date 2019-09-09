@@ -11,7 +11,9 @@ class Blg_Tag extends CI_Controller
         $this->load->model('blog/m_tag', 'tag');
         $this->load->library('form_builder');
 
-        $this->form_builder->init('tag', 'blg_tag', $this->uri->uri_string);
+        // hardcode or using segment
+        $module_page = $this->uri->segment(1) . '/' . $this->uri->segment(2) . '/';
+        $this->form_builder->init('tag', 'blg_tag', $module_page);
     }
 
     public function index()
@@ -28,10 +30,10 @@ class Blg_Tag extends CI_Controller
 
     public function create()
     {
-        // // preparing attributes
-        // $this->form_builder->dev_structure($this->tag->attributes);
+        if (!empty($this->input->post()))
+            $this->tag->save($this->input->post());
 
-        // processing
+        // preparing & processing
         $this->form_builder->form($this->tag->attributes);
         // rendering
         $this->load->view($this->form_builder->admin_temp, array(
@@ -39,21 +41,11 @@ class Blg_Tag extends CI_Controller
         ));
     }
 
+    public function save($type)
+    { }
+
     public function create_debug()
-    { //delete later
-        // $data=array(
-        //     'start'=>microtime(true),
-        //     'title'=>'Tag',
-        //     'content'=>$this->form_builder->form(),
-        //     'sub_content'=>null,
-        // );
-        // $this->load->view($this->form_builder->admin_temp, $data);
-        // $data['start']=microtime(true);
-        // $data['debug']='template/v_add';
-        // $data['debug']='template/v_content';
-        // $x=$this->auto_global->get_session();
-        // $x=$this->get_sessionX();
-        // echo $x;exit();
+    {
         $this->load->view('template/v_admin_layout', array(
             'start' => microtime(true),
             'title' => 'Create Tag',

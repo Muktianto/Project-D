@@ -54,6 +54,30 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 // -------------------------------- IGNITED: DEFINE CUSTOM GLOBAL FUNCTION ------------------------------------
 
+// auto mapping attributes for save or update
+function save_array($attributes, $data, $unset_pk = false)
+{
+	$save_array = array();
+	foreach ($attributes as $att_key => $att_value) {
+		// if (array_key_exists('value', $att_value))
+		$save_array[$att_key] = !empty($att_value['value']) ? $att_value['value'] : null;
+
+		// override value from post() or $data
+		if (!empty($data[$att_key]))
+			$save_array[$att_key] = $data[$att_key];
+
+		// unset PK, for update_array
+		if ($unset_pk and array_key_exists('primary_key', $att_value) and  $att_value['primary_key'])
+			unset($save_array[$att_key]);
+	}
+	return $save_array;
+}
+
+function update_array($attributes, $data)
+{
+	return save_array($attributes, $data, $unset_pk = true);
+}
+
 function debug($data = '', $exit = true, $simple = '')
 {
 	// if (empty($data) && $exit){

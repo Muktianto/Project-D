@@ -17,6 +17,7 @@ class M_tag extends CI_Model
 				'label' => 'Tag ID',
 				'align' => 'right',
 				'show_datatable' => true,
+				'auto_increment' => true,
 			),
 			'tag_name' => array(
 				'input' => 'text',
@@ -46,9 +47,15 @@ class M_tag extends CI_Model
 
 	public function get_data()
 	{
-		// debug($this->data->get_session());
 		return $this->db->select('tag_id,tag_name')
 			->get($this->table)->result_array();
+	}
+
+
+	public function save($data)
+	{
+		debug(save_array($this->attributes, $data));
+		$this->db->insert($this->table, save_array($this->attributes, $data));
 	}
 
 	public function get_by_id($id)
@@ -56,7 +63,7 @@ class M_tag extends CI_Model
 		return $this->data->build($this->table, $id);
 	}
 
-	public function save()
+	public function save2()
 	{
 		$post = $this->input->post();
 		$this->tag_id = $post['tag_id'];

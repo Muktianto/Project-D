@@ -45,7 +45,7 @@ class M_post extends CI_Model
             'comment' => array(
                 'input' => 'text',
                 'label' => 'comment',
-                'validation' => array('currency'),
+                'validation' => array('currency', 'required'),
                 'show_datatable' => true,
                 'group' => 2,
             ),
@@ -121,5 +121,9 @@ class M_post extends CI_Model
     {
         return $this->db->select('post_id, title, comment, views')
             ->get($this->table)->result_array();
+    }
+    public function save($data)
+    {
+        $this->db->insert($this->table, save_array($this->attributes, $data));
     }
 }

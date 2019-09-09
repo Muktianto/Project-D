@@ -11,19 +11,24 @@ class Blg_Post extends CI_Controller
         $this->load->model('blog/m_post', 'post');
         $this->load->library('form_builder');
 
-        $this->form_builder->init('post', 'blg_post', $this->uri->uri_string);
+        // hardcode or using segment
+        $module_page = $this->uri->segment(1) . '/' . $this->uri->segment(2) . '/';
+        $this->form_builder->init('post', 'blg_post', $module_page);
 
         // optional group
         $this->form_builder->form_structure = array(
             1 => array(
                 'label' => 'Group 1',
                 'color' => 'danger',
-                // 'col_len'=>'12',
+                'col_len' => '6',
             ),
             2 => array(
-                'label' => 'Group 2',
-                'color' => 'info',
-                // 'col_len'=>'12',
+                // 'label' => 'Grasasoup 2',
+                'color' => 'success',
+                'col_len' => '6',
+            ),
+            3 => array(
+                'label' => 'Grasasoup 2',
             ),
         );
     }
@@ -42,10 +47,9 @@ class Blg_Post extends CI_Controller
 
     public function create()
     {
-        // // preparing attributes
-        // $this->form_builder->dev_structure($this->tag->attributes);
-
-        // processing
+        if (!empty($this->input->post()))
+            $this->post->save($this->input->post());
+        // preparing & processing
         $this->form_builder->form($this->post->attributes);
         // rendering
         $this->load->view($this->form_builder->admin_temp, array(
