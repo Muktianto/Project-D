@@ -142,53 +142,23 @@
 
   ?>
   <script type="text/javascript">
-    var flash = <?php echo empty($flash_data) ? null : json_encode($flash_data); ?>;
+    var flash_data = <?php echo empty($flash_data) ? null : json_encode($flash_data); ?>;
+    var delay = 0;
 
-    alert(flash);
+    if (flash_data) {
+      Object.values(flash_data).forEach((notif) => {
+        var status = notif['status'];
 
-    if (flash) {
-      fruits.forEach(notify);
+        setTimeout(function() {
+          iziToast[status]({
+            title: notif['title'],
+            message: notif['message'],
+            position: "topRight"
+          });
+        }, delay);
+        delay = delay + 900;
+      });
 
-      setTimeout(function() {
-        //your code to be executed after 1 second
-
-        iziToast.info({
-          title: "Hello, world!",
-          message: "This awesome plugin is made iziToast toastr",
-          position: "topRight"
-        });
-      }, 00);
-
-      setTimeout(function() {
-        //your code to be executed after 1 second
-
-        iziToast.info({
-          title: "Hello, world!",
-          message: "This awesome plugin is made iziToast toastr",
-          position: "topRight"
-        });
-      }, 800);
-      setTimeout(function() {
-        //your code to be executed after 1 second
-
-        iziToast.info({
-          title: "Hello, world!",
-          message: "This awesome plugin is made iziToast toastr",
-          position: "topRight"
-        });
-      }, 1600);
-
-    }
-
-    function notify(item) {
-      setTimeout(function() {
-        //your code to be executed after 1 second
-        iziToast.info({
-          title: "Hello, world!",
-          message: "This awesome plugin is made iziToast toastr",
-          position: "topRight"
-        });
-      }, 1600);
     }
   </script>
 </body>

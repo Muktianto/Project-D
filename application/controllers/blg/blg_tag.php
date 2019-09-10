@@ -18,6 +18,39 @@ class Blg_Tag extends CI_Controller
 
     public function index()
     {
+        $debug = array(
+            'b' => array(
+                'title' => 'Yay!',
+                'message' => ' Record Saved',
+                'position' => 'topRight',
+                'status' => 'info',
+            ),
+            'c' => array(
+                'title' => 'DSA!',
+                'message' => ' asdasfasfasfasd',
+                'position' => 'topRight',
+                'status' => 'show',
+            ),
+            'c' => array(
+                'title' => 'DSA!',
+                'message' => ' asdasfasfasfasd',
+                'position' => 'topRight',
+                'status' => 'success',
+            ),
+            'a' => array(
+                'title' => 'Meh..',
+                'message' => 'Saving Failed',
+                'position' => 'topRight',
+                'status' => 'warning',
+            ),
+            'a' => array(
+                'title' => 'Meh..',
+                'message' => 'Saving Failed',
+                'position' => 'topRight',
+                'status' => 'danger',
+            ),
+        );
+        // debug($debug);
         // preparing
         $data_table = $this->tag->get_data();
         // processing
@@ -25,7 +58,8 @@ class Blg_Tag extends CI_Controller
         // rendering
         $this->load->view($this->form_builder->admin_temp, array(
             'data' => $this->form_builder->build(),
-            'flash_data' => $this->session->flashdata(),
+            // 'flash_data' => $this->session->flashdata(),
+            'flash_data' => $debug,
             // 'flash_data' => 'x',
         ));
     }
