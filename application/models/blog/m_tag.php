@@ -23,7 +23,7 @@ class M_tag extends CI_Model
 				'label' => 'Tag Name',
 				'validation' => array('required'),
 				'show_datatable' => true,
-				// 'sortable'=> true,
+				// 'value' => 'AAA',
 			),
 			CREATE_BY => array(
 				'value' => null, // $this->data->get_session('user_id'),
@@ -74,15 +74,6 @@ class M_tag extends CI_Model
 	public function get_by_id($id)
 	{
 		return $this->data->build($this->table, $id);
-	}
-
-	public function save2()
-	{
-		$post = $this->input->post();
-		$this->tag_id = $post['tag_id'];
-		$this->tag_name = $post['tag_name'];
-
-		$this->db->insert($this->table, $this);
 	}
 
 	public function update()

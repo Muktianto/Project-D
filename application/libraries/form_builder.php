@@ -238,7 +238,8 @@ class Form_builder
 	public function delete_link($key = '')
 	{
 		$key = empty($key) ? $this->current_primary_key_str : $key;
-		return ' <a href="' . site_url($this->module_page . 'delete/') . encode('DEL@' . $key) . '" class="btn btn-sm btn-icon icon-left btn-outline-danger"><i class="fas fa-trash"></i> Delete</a>';
+		$link = site_url($this->module_page . 'delete/') . encode('DEL@' . $key);
+		return ' <a href="" class="btn btn-sm btn-icon icon-left btn-outline-danger" data-confirm="Realy?|Do you want to continue?" data-confirm-yes="' . "window.location = '$link';" . '"><i class="fas fa-trash"></i> Delete</a>';
 	}
 
 	public function breadcrum($name, $button = '')
