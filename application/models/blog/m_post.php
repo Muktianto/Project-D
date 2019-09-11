@@ -99,7 +99,7 @@ class M_post extends CI_Model
                 'column' => 3,
             ),
             CREATE_BY => array(
-                'value' => $this->data->get_session('user_id'),
+                'value' => null, // $this->data->get_session('user_id'),
                 'show_form' => false,
             ),
             CREATE_DATE => array(
@@ -107,7 +107,7 @@ class M_post extends CI_Model
                 'show_form' => false,
             ),
             UPDATE_BY => array(
-                'value' => $this->data->get_session('user_id'),
+                'value' => null, // $this->data->get_session('user_id'),
                 'show_form' => false,
             ),
             UPDATE_DATE => array(

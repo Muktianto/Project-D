@@ -3,7 +3,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_tag extends CI_Model
 {
-
 	public $table = 'blg_tag';
 	public $primary_key;
 	public $attributes = array();
@@ -27,7 +26,7 @@ class M_tag extends CI_Model
 				// 'sortable'=> true,
 			),
 			CREATE_BY => array(
-				'value' => $this->data->get_session('user_id'),
+				'value' => null, // $this->data->get_session('user_id'),
 				'show_form' => false,
 			),
 			CREATE_DATE => array(
@@ -35,7 +34,7 @@ class M_tag extends CI_Model
 				'show_form' => false,
 			),
 			UPDATE_BY => array(
-				'value' => $this->data->get_session('user_id'),
+				'value' => null, // $this->data->get_session('user_id'),
 				'show_form' => false,
 			),
 			UPDATE_DATE => array(
@@ -48,30 +47,28 @@ class M_tag extends CI_Model
 	public function get_data()
 	{
 		return $this->db->select('tag_id,tag_name')
+			->order_by('create_date desc')
 			->get($this->table)->result_array();
 	}
 
-
 	public function save($data)
 	{
+		// save_array, update_array generate mapped array between attributes and data
 		$this->db->insert($this->table, save_array($this->attributes, $data));
-		if ($this->db->affected_rows() > 0) {
-			$notif = array(
-				'title' => 'Yay!',
-				'message' => $this->db->affected_rows() . ' Record Saved',
-				'status' => 'success',
-			);
-		} else {
-			$notif = array(
-				'title' => 'Meh..',
-				'message' => 'Saving Failed',
-				'status' => 'error',
-			);
+		// check_save, check_update, check_delte generate toast message
+		$this->session->set_flashdata(check_save($this->db->affected_rows()));
+	}
+
+	public function delete($id)
+	{
+		// validate if it has correct action prefix
+		$valid = $this->validate->delete($this->attributes, $id);
+		if ($valid) {
+			// delete_array provide the 'where' statement
+			$this->db->delete($this->table, delete_array($this->attributes, $id));
+			// check_save, check_update, check_delte generate toast message
+			$this->session->set_flashdata(check_delete($this->db->affected_rows()));
 		}
-
-		// $response = array($notif);
-
-		$this->session->set_flashdata(array($notif));
 	}
 
 	public function get_by_id($id)
@@ -95,10 +92,5 @@ class M_tag extends CI_Model
 		$this->tag_name = $post['tag_name'];
 
 		$this->db->update($this->table, $this, array('product_id' => $post['tag_id']));
-	}
-
-	public function delete($id)
-	{
-		return $this->db->delete($this->table, array('product_id' => $post['tag_id']));
 	}
 }

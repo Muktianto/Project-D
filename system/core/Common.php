@@ -54,6 +54,68 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 // -------------------------------- IGNITED: DEFINE CUSTOM GLOBAL FUNCTION ------------------------------------
 
+
+// ----- GROUP RESPONSE
+
+function check_save($affected_row)
+{
+	return	check_overall($affected_row, 'save');
+}
+
+function check_update($affected_row)
+{
+	return	check_overall($affected_row, 'update');
+}
+
+function check_delete($affected_row)
+{
+	return	check_overall($affected_row, 'delete');
+}
+
+function check_overall($affected_row, $type)
+{
+	$ok = $affected_row > 0 ? true : false;
+	$title = $ok  ? 'Yaay!' : 'Oops..';
+	$status = $ok  ? 'success' : 'warning';
+	switch ($type) {
+		case 'save':
+			$message = $ok  ?  'Data successfully saved.' : 'Failed to save data.';
+			break;
+		case 'update':
+			$message = $ok  ?  'Data successfully updated.' : 'Failed to update data.';
+			break;
+		case 'delete':
+			$title = $ok ? 'Done!' : 'Meh..';
+			$message = $ok  ?  'Data successfully deleted.' : 'Failed to delete data.';
+			$status = $ok  ? 'error' : 'warning';
+			break;
+		default:
+			$title = $ok  ? 'Okay!' : 'Eww..';
+			$message = $ok  ?  'Operation successfully finished.' : 'Something wrong here.';
+			$status = $ok  ? 'info' : 'warning';
+			break;
+	}
+	return  short_response($message, $status, $title);
+}
+
+function short_response($message = 'No Message', $status = 'info', $title = null, $position = 'topRight')
+{
+	return array(
+		'postition' => $position,
+		'notif' => array(
+			array(
+				'title' => $title,
+				'message' => $message,
+				'status' => $status,
+			)
+		)
+	);
+}
+
+// ----- END OF GROUP RESPONSE
+
+// ----- GROUP MAPPING
+
 // auto mapping attributes for save or update
 function save_array($attributes, $data, $unset_pk = false)
 {
@@ -78,24 +140,28 @@ function update_array($attributes, $data)
 	return save_array($attributes, $data, $unset_pk = true);
 }
 
-function debug($data = '', $exit = true, $simple = '')
+function delete_array($attributes, $id)
 {
-	// if (empty($data) && $exit){
-	// 	echo 'Data is empty';
-	// }
-	$style = !empty($simple) ? '' : ' style="background-color: #2a2734; border-radius: .50rem; color: #ffcc99; border: none; padding: 0px 20px; font-weight: 600;display: inline-block; margin-bottom: 7px"';
-	echo '<div ' . $style . '><pre>';
-	if (is_object($data)) {
-		var_dump($data);
-	} else if (is_array($data)) {
-		print_r($data);
+	$id = explode('@', decode($id));
+	$keys = get_keys($attributes);
+	if (is_array($keys)) {
+		$delete_array = array();
+		$id_vals = explode('|', $id[1]);
+		foreach ($keys as $key => $value) {
+			// keys and id_vals, should be have same len and map key 
+			$delete_array[$value] = $id_vals[$key];
+		}
+		return $delete_array;
 	} else {
-		echo !empty($data) ? $data : '<span style="color: #fff">- Empty -</span>';
+		return array(
+			$keys => $id[1],
+		);
 	}
-	echo '</pre></div><br>';
-	if ($exit)
-		exit();
 }
+
+// ----- END OF GROUP MAPPING
+
+// ----- GROUP ENCODE
 
 // PHP 7.1> NOT SUPPORT
 // function encode($value) {
@@ -124,12 +190,12 @@ function debug($data = '', $exit = true, $simple = '')
 // 	return trim($decrypttext);
 // }
 
-function encode($string)
+function encode($string) // or safe_b64encode
 {
 	return strrev(str_replace(array('+', '/', '='), array('-', '_', ''), base64_encode($string)));
 }
 
-function decode($string)
+function decode($string) // or safe_b64decode
 {
 	$data = str_replace(array('-', '_'), array('+', '/'), strrev($string));
 	$mod4 = strlen($data) % 4;
@@ -138,7 +204,38 @@ function decode($string)
 	}
 	return base64_decode($data);
 }
+// ----- END OF GROUP ENCODE
 
+// ----- GROUP GENERAL
+
+function debug($data = '', $exit = true, $simple = '')
+{
+	$style = !empty($simple) ? '' : ' style="background-color: #2a2734; border-radius: .50rem; color: #ffcc99; border: none; padding: 0px 20px; font-weight: 600;display: inline-block; margin-bottom: 7px"';
+	echo '<div ' . $style . '><pre>';
+	if (is_object($data)) {
+		var_dump($data);
+	} else if (is_array($data)) {
+		print_r($data);
+	} else {
+		echo !empty($data) ? $data : '<span style="color: #fff">- Empty -</span>';
+	}
+	echo '</pre></div><br>';
+	if ($exit)
+		exit();
+}
+
+function get_keys($attributes)
+{
+	$keys = array();
+	foreach ($attributes as $key => $value) {
+		if (!empty($value['primary_key']) and $value['primary_key']) {
+			$keys[] = $key;
+		}
+	}
+	return empty($keys) ? $keys : ((count($keys) > 1) ? $keys : $keys[0]);
+}
+
+// ----- END OF GROUP GENERAL
 
 // -------------------------------- IGNITED: END OF DEFINE CUSTOM GLOBAL FUNCTION ------------------------------------
 

@@ -143,17 +143,18 @@
   ?>
   <script type="text/javascript">
     var flash_data = <?php echo empty($flash_data) ? null : json_encode($flash_data); ?>;
-    var delay = 0;
 
-    if (flash_data) {
-      Object.values(flash_data).forEach((notif) => {
-        var status = notif['status'];
+    if (flash_data['notif']) {
+      var delay = 0;
+      var position_val = flash_data['position'] ? flash_data['position'] : "topRight";
+      Object.values(flash_data['notif']).forEach((value) => {
+        var status = value['status'];
 
         setTimeout(function() {
           iziToast[status]({
-            title: notif['title'],
-            message: notif['message'],
-            position: "topRight"
+            title: value['title'],
+            message: value['message'],
+            position: position_val,
           });
         }, delay);
         delay = delay + 900;

@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Blg_Tag extends CI_Controller
 {
-
+    private $module_page = '';
     public function __construct()
     {
         parent::__construct();
@@ -12,45 +12,12 @@ class Blg_Tag extends CI_Controller
         $this->load->library('form_builder');
 
         // hardcode or using segment
-        $module_page = $this->uri->segment(1) . '/' . $this->uri->segment(2) . '/';
-        $this->form_builder->init('tag', 'blg_tag', $module_page);
+        $this->module_page = $this->uri->segment(1) . '/' . $this->uri->segment(2) . '/';
+        $this->form_builder->init('tag', 'blg_tag', $this->module_page);
     }
 
     public function index()
     {
-        $debug = array(
-            'b' => array(
-                'title' => 'Yay!',
-                'message' => ' Record Saved',
-                'position' => 'topRight',
-                'status' => 'info',
-            ),
-            'c' => array(
-                'title' => 'DSA!',
-                'message' => ' asdasfasfasfasd',
-                'position' => 'topRight',
-                'status' => 'show',
-            ),
-            'c' => array(
-                'title' => 'DSA!',
-                'message' => ' asdasfasfasfasd',
-                'position' => 'topRight',
-                'status' => 'success',
-            ),
-            'a' => array(
-                'title' => 'Meh..',
-                'message' => 'Saving Failed',
-                'position' => 'topRight',
-                'status' => 'warning',
-            ),
-            'a' => array(
-                'title' => 'Meh..',
-                'message' => 'Saving Failed',
-                'position' => 'topRight',
-                'status' => 'danger',
-            ),
-        );
-        // debug($debug);
         // preparing
         $data_table = $this->tag->get_data();
         // processing
@@ -58,18 +25,17 @@ class Blg_Tag extends CI_Controller
         // rendering
         $this->load->view($this->form_builder->admin_temp, array(
             'data' => $this->form_builder->build(),
-            // 'flash_data' => $this->session->flashdata(),
-            'flash_data' => $debug,
-            // 'flash_data' => 'x',
+            'flash_data' => $this->session->flashdata(),
         ));
     }
 
     public function create()
     {
         $post = $this->input->post();
-        if (!empty($post))
+        if (!empty($post)) {
             $this->tag->save($post);
-
+            redirect($this->module_page);
+        }
         // preparing & processing
         $this->form_builder->form($this->tag->attributes);
         // rendering
@@ -78,20 +44,14 @@ class Blg_Tag extends CI_Controller
         ));
     }
 
-    public function create_debug()
+    public function delete($id = null)
     {
-        $this->load->view('template/v_admin_layout', array(
-            'start' => microtime(true),
-            'title' => 'Create Tag',
-            'content' => $this->form_builder->build(),
-            'sub_content' => null,
-            'debug' => 'template/v_add',
-        ));
+        $this->tag->delete($id);
+        redirect($this->module_page);
     }
 
     public function update($id = null)
     {
-
         if (!isset($id)) redirect('tag');
 
         $this->form_validation->set_rules($this->m_tag->rules());
@@ -107,14 +67,7 @@ class Blg_Tag extends CI_Controller
         $this->load->view("admin/tag/edit_form", $data);
     }
 
-    public function delete($id = null)
-    {
-        if (!isset($id)) show_404();
 
-        if ($this->m_tag->delete($id)) {
-            redirect(site_url('admin/tag/list'));
-        }
-    }
 
 
     // -------------------------- TEST 
@@ -130,18 +83,18 @@ class Blg_Tag extends CI_Controller
         $this->session->set_userdata($user_session);
 
         $notif = array(
-            'a' => array(
+            array(
                 'title' => 'Meh..',
                 'message' => 'Saving Failed',
                 'status' => 'error',
             ),
-            'b' => array(
+            array(
                 'title' => 'Meh..',
                 'message' => 'Saving Failed',
                 'status' => 'error',
             ),
         );
-        $this->session->set_flashdata($notif);
+        $this->session->set_flashdata(array('notif' => $notif));
 
         echo 'login';
     }

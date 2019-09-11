@@ -232,13 +232,13 @@ class Form_builder
 	public function update_link($key = '', $label = 'View', $color = 'info', $icon = 'edit', $icon_loc = 'left')
 	{
 		$key = empty($key) ? $this->current_primary_key_str : $key;
-		return ' <a href="' . site_url($this->module_page . '/update/') . encode('UPD|' . $key) . '" class="btn btn-sm btn-icon icon-' . $icon_loc . ' btn-outline-' . $color . '"><i class="fas fa-' . $icon . '"></i> ' . $label . '</a>';
+		return ' <a href="' . site_url($this->module_page . 'update/') . encode('UPD@' . $key) . '" class="btn btn-sm btn-icon icon-' . $icon_loc . ' btn-outline-' . $color . '"><i class="fas fa-' . $icon . '"></i> ' . $label . '</a>';
 	}
 
 	public function delete_link($key = '')
 	{
 		$key = empty($key) ? $this->current_primary_key_str : $key;
-		return ' <a href="' . site_url($this->module_page . '/delete/') . encode('DEL|' . $key) . '" class="btn btn-sm btn-icon icon-left btn-outline-danger"><i class="fas fa-trash"></i> Delete</a>';
+		return ' <a href="' . site_url($this->module_page . 'delete/') . encode('DEL@' . $key) . '" class="btn btn-sm btn-icon icon-left btn-outline-danger"><i class="fas fa-trash"></i> Delete</a>';
 	}
 
 	public function breadcrum($name, $button = '')
