@@ -75,7 +75,7 @@ function check_delete($affected_row)
 function check_overall($affected_row, $type)
 {
 	$ok = $affected_row > 0 ? true : false;
-	$title = $ok  ? 'Yaay!' : 'Oops..';
+	$title = $ok  ? 'Yaay! \ (•◡•) /' : 'Oops.. ¯\_(ツ)_/¯';
 	$status = $ok  ? 'success' : 'warning';
 	switch ($type) {
 		case 'save':
@@ -85,12 +85,12 @@ function check_overall($affected_row, $type)
 			$message = $ok  ?  'Data successfully updated.' : 'Failed to update data.';
 			break;
 		case 'delete':
-			$title = $ok ? 'Done!' : 'Meh..';
+			$title = $ok ? 'Done! (~˘▾˘)~' : 'Meh.. ಠ╭╮ಠ';
 			$message = $ok  ?  'Data successfully deleted.' : 'Failed to delete data.';
 			$status = $ok  ? 'error' : 'warning';
 			break;
 		default:
-			$title = $ok  ? 'Okay!' : 'Eww..';
+			$title = $ok  ? 'Okay! (• ε •)' : 'Eww.. ( ⚆ _ ⚆ ) ';
 			$message = $ok  ?  'Operation successfully finished.' : 'Something wrong here.';
 			$status = $ok  ? 'info' : 'warning';
 			break;
@@ -100,6 +100,8 @@ function check_overall($affected_row, $type)
 
 function short_response($message = 'No Message', $status = 'info', $title = null, $position = 'topRight')
 {
+	if (!in_array($status, array('info', 'success', 'warning', 'error')))
+		$status = 'info';
 	return array(
 		'postition' => $position,
 		'notif' => array(
@@ -140,13 +142,13 @@ function update_array($attributes, $data)
 	return save_array($attributes, $data, $unset_pk = true);
 }
 
-function delete_array($attributes, $id)
+function delete_array($attributes, $id_param)
 {
-	$id = explode('@', decode($id));
+	$id_param = explode('@', decode($id_param));
 	$keys = get_keys($attributes);
 	if (is_array($keys)) {
 		$delete_array = array();
-		$id_vals = explode('|', $id[1]);
+		$id_vals = explode('|', $id_param[1]);
 		foreach ($keys as $key => $value) {
 			// keys and id_vals, should be have same len and map key 
 			$delete_array[$value] = $id_vals[$key];
@@ -154,7 +156,26 @@ function delete_array($attributes, $id)
 		return $delete_array;
 	} else {
 		return array(
-			$keys => $id[1],
+			$keys => $id_param[1],
+		);
+	}
+}
+
+function where_statement($attributes, $id_param)
+{
+	$id_param = explode('@', decode($id_param));
+	$keys = get_keys($attributes);
+	if (is_array($keys)) {
+		$where_array = array();
+		$id_vals = explode('|', $id_param[1]);
+		foreach ($keys as $key => $value) {
+			// keys and id_vals, should be have same len and map key 
+			$where_array[$value] = $id_vals[$key];
+		}
+		return $where_array;
+	} else {
+		return array(
+			$keys => $id_param[1],
 		);
 	}
 }

@@ -18,11 +18,17 @@ class Blg_Tag extends CI_Controller
 
     public function index()
     {
+        // $x = $this->session->flashdata();
+        // debug($x);
         // preparing
         $data_table = $this->tag->get_data();
         // processing
         $this->form_builder->mapping($this->tag->attributes, $data_table);
         // rendering
+        // debug(array(
+        //     'data' => $this->form_builder->build(),
+        //     'flash_data' => $this->session->flashdata(),
+        // ));
         $this->load->view($this->form_builder->admin_temp, array(
             'data' => $this->form_builder->build(),
             'flash_data' => $this->session->flashdata(),
@@ -52,22 +58,25 @@ class Blg_Tag extends CI_Controller
 
     public function update($id = null)
     {
-        if (!isset($id)) redirect('tag');
-
-        $this->form_validation->set_rules($this->m_tag->rules());
-
-        if ($this->form_validation->run()) {
-            $this->m_tag->update();
-            $this->session->set_flashdata('success', 'Berhasil disimpan');
+        // preparing data
+        $data = $this->tag->get_by_id($id);
+        if (!$data) {
+            // empty data
+            redirect($this->module_page);
         }
-
-        $data["tag"] = $this->m_tag->getById($id);
-        if (!$data["tag"]) show_404();
-
-        $this->load->view("admin/tag/edit_form", $data);
+        debug($data);
+        $post = $this->input->post();
+        if (!empty($post)) {
+            $this->tag->update($post);
+            redirect($this->module_page);
+        }
+        // processing
+        $this->form_builder->form($this->tag->attributes);
+        // rendering
+        $this->load->view($this->form_builder->admin_temp, array(
+            'data' => $this->form_builder->build_form(),
+        ));
     }
-
-
 
 
     // -------------------------- TEST 

@@ -239,7 +239,7 @@ class Form_builder
 	{
 		$key = empty($key) ? $this->current_primary_key_str : $key;
 		$link = site_url($this->module_page . 'delete/') . encode('DEL@' . $key);
-		return ' <a href="" class="btn btn-sm btn-icon icon-left btn-outline-danger" data-confirm="Realy?|Do you want to continue?" data-confirm-yes="' . "window.location = '$link';" . '"><i class="fas fa-trash"></i> Delete</a>';
+		return ' <a href="' . $link . '" class="btn btn-sm btn-icon icon-left btn-outline-danger" data-confirm="Realy?|Do you want to continue?" data-confirm-yes="' . "window.location = '$link';" . '"><i class="fas fa-trash"></i> Delete</a>';
 	}
 
 	public function breadcrum($name, $button = '')
@@ -258,7 +258,7 @@ class Form_builder
 	public function datatable()
 	{
 		// breadcrum bar
-		$add_button = '&nbsp&nbsp&nbsp<a href="' .  site_url($this->module_page . '/create/') . '" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus" style="font-size: smaller;"></i> Create</a>';
+		$add_button = '&nbsp&nbsp&nbsp<a href="' .  site_url($this->module_page . 'create/') . '" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus" style="font-size: smaller;"></i> Create</a>';
 		$this->bricks['breadcrum_bar'] .= $this->breadcrum($this->module_name, $add_button);
 
 		// header content

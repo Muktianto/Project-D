@@ -59,21 +59,27 @@ class M_tag extends CI_Model
 		$this->session->set_flashdata(check_save($this->db->affected_rows()));
 	}
 
-	public function delete($id)
+	public function delete($id_param)
 	{
 		// validate if it has correct action prefix
-		$valid = $this->validate->delete($this->attributes, $id);
+		$valid = $this->validate->delete($this->attributes, $id_param);
 		if ($valid) {
 			// delete_array provide the 'where' statement
-			$this->db->delete($this->table, delete_array($this->attributes, $id));
+			$this->db->delete($this->table, delete_array($this->attributes, $id_param));
 			// check_save, check_update, check_delte generate toast message
 			$this->session->set_flashdata(check_delete($this->db->affected_rows()));
 		}
 	}
 
-	public function get_by_id($id)
+	public function get_by_id($id_param)
 	{
-		return $this->data->build($this->table, $id);
+		// validate if it has correct action prefix and exit in table
+		$valid = $this->validate->update($this->attributes, $id_param, $this->table);
+		if (!$valid) {
+			return false;
+		}
+		// get data
+		return $this->data->get_by_id($this->attributes, $id_param, $this->table);
 	}
 
 	public function update()
