@@ -65,6 +65,7 @@ class Form_builder
 	// map structure prediction
 	public $group = array();
 	public $form_structure = array();
+	// 
 	public $form_structure2 = array(
 		'group_id_1' => array(
 			'label' => 'Group 1',
@@ -239,7 +240,7 @@ class Form_builder
 	{
 		$key = empty($key) ? $this->current_primary_key_str : $key;
 		$link = site_url($this->module_page . 'delete/') . encode('DEL@' . $key);
-		return ' <a href="' . $link . '" class="btn btn-sm btn-icon icon-left btn-outline-danger" data-confirm="Realy?|Do you want to continue?" data-confirm-yes="' . "window.location = '$link';" . '"><i class="fas fa-trash"></i> Delete</a>';
+		return ' <a href="" class="btn btn-sm btn-icon icon-left btn-outline-danger" data-confirm="Realy?|Do you want to continue?" data-confirm-yes="' . "window.location = '$link';" . '"><i class="fas fa-trash"></i> Delete</a>';
 	}
 
 	public function breadcrum($name, $button = '')
@@ -356,7 +357,7 @@ class Form_builder
 		return $this->main_build(false);
 	}
 
-	public function develop_form_structure($attributes)
+	public function develop_form_structure($attributes, $data = null)
 	{
 		$column_count = array();
 		foreach ($attributes as $att_key => $att_value) {
@@ -369,11 +370,15 @@ class Form_builder
 				$this->form_structure[$data_group]['data'][$data_column][$att_key] = array(
 					'label' => $label,
 					'input' => !empty($att_value['input']) ? $att_value['input'] : null,
-					'value' => !empty($att_value['input']) ? $att_value['input'] : null,
+					'value' => !empty($att_value['value']) ? $att_value['value'] : null,
 					'validation' => $validation,
 					'warning_label' => !in_array('required', $validation) ? null : (!empty($att_value['warning_label']) ? $att_value['warning_label'] : "Empty $label!"),
 				);
 
+				// override value if exist, update function
+				if (!empty($data[$att_key])) {
+					$this->form_structure[$data_group]['data'][$data_column][$att_key]['value'] = $data[$att_key];
+				}
 				$column_count[$data_group][$data_column] = empty($column_count[$data_group][$data_column]) ? 1 : $column_count[$data_group][$data_column] + 1;
 			}
 		}
@@ -397,10 +402,11 @@ class Form_builder
 
 	public function form($attributes = null, $data = null)
 	{
+		$update = empty($data) ? false : true;
 		// developing structure
 		// empty attributes means u should prepare $this->form_structure by urself
 		if (!empty($attributes)) {
-			$this->develop_form_structure($attributes);
+			$this->develop_form_structure($attributes, $data);
 		}
 
 		// breadcrum bar
@@ -408,11 +414,14 @@ class Form_builder
 		// header section
 		$this->bricks_form['section'] .= '<div class="section-body">';
 		// header form
-		$this->bricks_form['form'] .= ' <form action="' . base_url($this->module_page . 'create') . '" method="post" enctype="multipart/form-data" class="needs-validation" novalidate=""><div class="row">';
+		$form_function = $update ? 'update' : 'create';
+		$this->bricks_form['form'] .= ' <form action="' . base_url($this->module_page . $form_function) . '" method="post" enctype="multipart/form-data" class="needs-validation" novalidate=""><div class="row">';
 
 		// content
 		$content = '';
 		// group head level
+		// debug($this->form_structure, false);
+		// debug($data);
 		foreach ($this->form_structure as $fs_key => $fs_value) {
 			$label_group = !empty($fs_value['label']) ? '<div class="card-header"><h4>' . $fs_value['label'] . '</h4></div>' : '';
 			$col_len = !empty($fs_value['col_len']) ? $fs_value['col_len'] : 12;
@@ -464,10 +473,13 @@ class Form_builder
 					// form core
 					switch ($data_form_value['input']) {
 						case 'hidden':
-							$forms_field .= '<input type="hidden" name="' . $data_form_key . '" class="form-control">';
+							$forms_field .= '<input type="hidden" value="' . $value . '" name="' . $data_form_key . '" class="form-control">';
 							break;
 						case 'text':
-							$forms_field .= '<label>' . $label . '</label><input type="text" name="' . $data_form_key . '" class="form-control" ' . $validation . '>' . $warning_label;
+							$forms_field .= '<label>' . $label . '</label><input type="text" value="' . $value . '" name="' . $data_form_key . '" class="form-control" ' . $validation . '>' . $warning_label;
+							break;
+						case 'textarea':
+							$forms_field .= '<label>' . $label . '</label><textarea name="' . $data_form_key . '" class="form-control" ' . $validation . '>' . $value . '</textarea>' . $warning_label;
 							break;
 
 						default:
@@ -485,9 +497,9 @@ class Form_builder
 			// button if last group
 			if (!empty($fs_value['last_group']) and $fs_value['last_group']) {
 				// site_url($this->module_page.'/create/')
+				$action_button = $update ? ' <button type="submit" class="btn btn-info"><i class="fa fa-save"></i> Update</button>' : '<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>';
 				$content .= '<div class="card-footer text-right">
-				<a href="' . 'back_page' . '" class="btn btn-icon icon-left btn-secondary"><i class="fa fa-chevron-left"></i> Cancel</a>
-				<button type="submit" class="btn btn-primary"><i class="fa fa-save"></i> Save</button>';
+				<a href="' . 'back_page' . '" class="btn btn-icon icon-left btn-light"><i class="fa fa-chevron-left"></i> Cancel</a>' . $action_button;
 			}
 
 			// end of group head

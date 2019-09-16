@@ -139,7 +139,19 @@ function save_array($attributes, $data, $unset_pk = false)
 
 function update_array($attributes, $data)
 {
-	return save_array($attributes, $data, $unset_pk = true);
+	$keys = get_keys($attributes);
+	if (is_array($keys)) {
+		$where_array = array();
+		foreach ($keys as $key => $value) {
+			// keys and id_vals, should be have same len and map key 
+			$where_array[$value] = $data[$key];
+		}
+		return $where_array;
+	} else {
+		return array(
+			$keys => $data[$keys],
+		);
+	}
 }
 
 function delete_array($attributes, $id_param)
@@ -161,13 +173,12 @@ function delete_array($attributes, $id_param)
 	}
 }
 
-function where_statement($attributes, $id_param)
+function where_statement($attributes, $id)
 {
-	$id_param = explode('@', decode($id_param));
 	$keys = get_keys($attributes);
 	if (is_array($keys)) {
 		$where_array = array();
-		$id_vals = explode('|', $id_param[1]);
+		$id_vals = explode('|', $id);
 		foreach ($keys as $key => $value) {
 			// keys and id_vals, should be have same len and map key 
 			$where_array[$value] = $id_vals[$key];
@@ -175,7 +186,7 @@ function where_statement($attributes, $id_param)
 		return $where_array;
 	} else {
 		return array(
-			$keys => $id_param[1],
+			$keys => $id,
 		);
 	}
 }

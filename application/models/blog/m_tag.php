@@ -59,18 +59,6 @@ class M_tag extends CI_Model
 		$this->session->set_flashdata(check_save($this->db->affected_rows()));
 	}
 
-	public function delete($id_param)
-	{
-		// validate if it has correct action prefix
-		$valid = $this->validate->delete($this->attributes, $id_param);
-		if ($valid) {
-			// delete_array provide the 'where' statement
-			$this->db->delete($this->table, delete_array($this->attributes, $id_param));
-			// check_save, check_update, check_delte generate toast message
-			$this->session->set_flashdata(check_delete($this->db->affected_rows()));
-		}
-	}
-
 	public function get_by_id($id_param)
 	{
 		// validate if it has correct action prefix and exit in table
@@ -82,12 +70,24 @@ class M_tag extends CI_Model
 		return $this->data->get_by_id($this->attributes, $id_param, $this->table);
 	}
 
-	public function update()
+	public function update($data)
 	{
-		$post = $this->input->post();
-		$this->tag_id = $post['tag_id'];
-		$this->tag_name = $post['tag_name'];
+		// ---------- PENDING !!!!!!! write validate to update here, waiting user-role-action module
+		// save_array, update_array generate mapped array between attributes and data
+		$this->db->update($this->table, $data, update_array($this->attributes, $data));
+		// check_save, check_update, check_delte generate toast message
+		$this->session->set_flashdata(check_update($this->db->affected_rows()));
+	}
 
-		$this->db->update($this->table, $this, array('product_id' => $post['tag_id']));
+	public function delete($id_param)
+	{
+		// validate if it has correct action prefix
+		$valid = $this->validate->delete($this->attributes, $id_param);
+		if ($valid) {
+			// delete_array provide the 'where' statement
+			$this->db->delete($this->table, delete_array($this->attributes, $id_param));
+			// check_save, check_update, check_delte generate toast message
+			$this->session->set_flashdata(check_delete($this->db->affected_rows()));
+		}
 	}
 }

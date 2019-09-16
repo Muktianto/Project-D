@@ -23,8 +23,9 @@ class Data
 
     public function get_by_id($attributes, $id_param, $table)
     {
+        $id = explode('@', decode($id_param));
         $select = $this->get_form_fields($attributes);
-        $where = where_statement($attributes, $id_param);
+        $where = where_statement($attributes, $id[1]);
         $result = $this->CI->db->select($select)
             ->from($table)
             ->where($where)
